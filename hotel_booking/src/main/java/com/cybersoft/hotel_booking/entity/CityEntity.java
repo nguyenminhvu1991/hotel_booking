@@ -18,15 +18,44 @@ public class CityEntity {
 //    @Column(name = "provinceId")
 //    private int provinceId;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "provinceId")
+    @JoinColumn(name = "province_id")
     private ProvinceEntity province;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "city")
     Set<HotelEntity> hotelEntitySet;
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public ProvinceEntity getProvince() {
+        return province;
+    }
+
+    public void setProvince(ProvinceEntity province) {
+        this.province = province;
+    }
+
+    public Set<HotelEntity> getHotelEntitySet() {
+        return hotelEntitySet;
+    }
+
+    public void setHotelEntitySet(Set<HotelEntity> hotelEntitySet) {
+        this.hotelEntitySet = hotelEntitySet;
+    }
 }

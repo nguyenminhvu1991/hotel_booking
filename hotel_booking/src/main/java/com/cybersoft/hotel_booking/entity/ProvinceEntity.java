@@ -15,8 +15,31 @@ public class ProvinceEntity {
     @Column(name = "province")
     private String province;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "province")
     Set<CityEntity> cityEntitySet;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public Set<CityEntity> getCityEntitySet() {
+        return cityEntitySet;
+    }
+
+    public void setCityEntitySet(Set<CityEntity> cityEntitySet) {
+        this.cityEntitySet = cityEntitySet;
+    }
 }
