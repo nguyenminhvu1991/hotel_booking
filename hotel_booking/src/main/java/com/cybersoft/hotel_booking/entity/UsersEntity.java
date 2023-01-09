@@ -25,6 +25,9 @@ public class UsersEntity {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "email_verify")
+    private boolean emailVerify;
+
     @Column(name = "password")
     private String password;
 
@@ -81,6 +84,14 @@ public class UsersEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isEmailVerify() {
+        return emailVerify;
+    }
+
+    public void setEmailVerify(boolean emailVerify) {
+        this.emailVerify = emailVerify;
     }
 
     public String getPassword() {
