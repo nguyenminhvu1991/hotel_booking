@@ -3,6 +3,12 @@ DROP database hotel_booking;
 CREATE DATABASE hotel_booking;
 USE hotel_booking;
 -- -----------------------
+DROP TABLE IF EXISTS token_expired;
+CREATE TABLE token_expired (
+id int NOT NULL AUTO_INCREMENT,
+name varchar(1000),
+PRIMARY KEY (id));
+-- ------------------------
 DROP TABLE IF EXISTS contact;
 CREATE TABLE contact (
 id int NOT NULL AUTO_INCREMENT,
