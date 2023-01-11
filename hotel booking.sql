@@ -50,12 +50,12 @@ SELECT * FROM users;
 
 /*Data for the table users */
 INSERT INTO users (full_name, DOB, email, password, phone, gender, role_id) VALUES 
-('Nguyen Van A ', '1990-12-12', 'nguyenvanA@gmail.com', '123456', '090123456', 'Male', 1),
-('Nguyen Thi B ', '1995-12-03', 'nguyenthiB95@gmail.com', '123457', '090123444', 'Female', 1),
-('Nguyen Van C ', '1991-01-10', 'nguyenvanC91@gmail.com', '123458', '090333456', 'Male', 2),
-('Nguyen Van D ', '1992-01-15', 'nguyenvanD92@gmail.com', '123459', '090333888', 'Male', 2),
-('Nguyen Van E ', '1995-01-15', 'nguyenvanE95@gmail.com', '123450', '090333881', 'Male', 2),
-('Nguyen Van F ', '1998-01-15', 'nguyenvanE98@gmail.com', '123453', '090333889', 'Male', 2);
+('Nguyen Van A' , '1990-12-12', 'nguyenvana@gmail.com'	,'$2a$12$Dhj428GYAkOLcrl6tdi6QOjTiSQ0X/7UJGF.tRZto0w0Bp57nM4VO', '090123456' ,'Male',	 	1),
+('Nguyen Thi B' , '1995-12-03', 'nguyenthib95@gmail.com' ,'$2a$12$ULigTHQsN/wwpFAHxs9EwederX1.kZMX1CmLD0RjA9L0XwPO/HZrG', '090123444' ,'Female', 	1),
+('Nguyen Van C' , '1991-01-10', 'nguyenvanc91@gmail.com' ,'$2a$12$nUpq89uS.Dgl1TklB8S5xeq5Nt9T13gW0WRuZ49WsxI5NCTjY6XfO', '090333456' ,'Male',	2),
+('Nguyen Van D' , '1992-01-15', 'nguyenvand92@gmail.com' ,'$2a$12$jnl3TFxtMNsCKN96nYIkmeBPj6a3HnCa58TFqbYfQBtHhTJmPvHPO', '090333888' ,'Male',	2),
+('Nguyen Van E' , '1995-01-15', 'nguyenvane95@gmail.com' ,'$2a$12$oX/7edZfNGcv/GP7qJrYY.8AhyU5UIsoe.yxyLO3TvLFYfxEv4KsC', '090333881' ,'Male',	2),
+('Nguyen Van F' , '1998-01-15', 'nguyenvane98@gmail.com' ,'$2a$12$MQkVUyucQuPNw9gNGNfKEu1fM071zxxMv0ucIRBHFrMWWkmcM8POm', '090333889' ,'Male',	2);
 SELECT * FROM users;
 
 -- ----------------------------
