@@ -35,7 +35,7 @@ public class ReviewEntity {
 
 //    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "users_id")
     private UsersEntity users;
 
     public int getId() {

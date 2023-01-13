@@ -249,14 +249,14 @@ content varchar(255) DEFAULT NULL,
 rate_score decimal(4,2) DEFAULT NULL,
 created_date date DEFAULT NULL,
 hotel_id int DEFAULT NULL,
-user_id int DEFAULT NULL,
+users_id int DEFAULT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (hotel_id) REFERENCES hotel (id),-- ON DELETE CASCADE,
-FOREIGN KEY (user_id) REFERENCES users (id)-- ON DELETE CASCADE,
+FOREIGN KEY (users_id) REFERENCES users (id)-- ON DELETE CASCADE,
 );
 SELECT * FROM review;
 
-INSERT INTO review (content, rate_score, hotel_id, user_id) VALUES 
+INSERT INTO review (content, rate_score, hotel_id, users_id) VALUES 
 ( 'good', 5, 1, 3 ),
 ( 'good', 5, 2, 3 ),
 ( 'good', 5, 3, 3 ),
@@ -444,7 +444,7 @@ SELECT * FROM room_dates;
 DROP TABLE IF EXISTS booking;
 CREATE TABLE booking ( -- thông tin bảng này cập nhật từ người dùng/ FORM
 id int NOT NULL AUTO_INCREMENT,
-user_id int DEFAULT NULL,
+users_id int DEFAULT NULL,
 check_in date DEFAULT NULL,
 check_out date DEFAULT NULL, 
 adult_number int DEFAULT NULL,
@@ -459,7 +459,7 @@ payment_method varchar(100) DEFAULT NULL,
 payment_date date DEFAULT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (voucher_id) REFERENCES voucher (id),-- ON DELETE CASCADE,
-FOREIGN KEY (user_id) REFERENCES users (id)-- ON DELETE CASCADE,
+FOREIGN KEY (users_id) REFERENCES users (id)-- ON DELETE CASCADE,
 );
 SELECT * FROM booking;
 
@@ -469,14 +469,14 @@ DROP TABLE IF EXISTS bill; -- chủ yếu replicate dữ liệu từ bảng Book
 CREATE TABLE bill (
 id int NOT NULL AUTO_INCREMENT,
 booking_id int DEFAULT NULL,
-user_id int DEFAULT NULL,
+users_id int DEFAULT NULL,
 full_name varchar (255) DEFAULT NULL,
 payment_date date DEFAULT NULL,
 payment_total decimal (10,2) DEFAULT NULL,
 payment_method varchar(100) DEFAULT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (booking_id) REFERENCES booking (id),-- ON DELETE CASCADE,
-FOREIGN KEY (user_id) REFERENCES users (id)-- ON DELETE CASCADE,
+FOREIGN KEY (users_id) REFERENCES users (id)-- ON DELETE CASCADE,
 );
 SELECT * FROM bill;
 
