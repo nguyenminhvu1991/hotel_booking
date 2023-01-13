@@ -17,8 +17,6 @@ email varchar(100),
 name varchar(100),
 phone varchar(100),
 PRIMARY KEY (id));
-
-
 -- ---------------------------------
 DROP TABLE IF EXISTS roles;
 CREATE TABLE roles (
@@ -57,7 +55,6 @@ INSERT INTO users (full_name, DOB, email, password, phone, gender, role_id) VALU
 ('Nguyen Van E' , '1995-01-15', 'nguyenvane95@gmail.com' ,'$2a$12$oX/7edZfNGcv/GP7qJrYY.8AhyU5UIsoe.yxyLO3TvLFYfxEv4KsC', '090333881' ,'Male',	2),
 ('Nguyen Van F' , '1998-01-15', 'nguyenvane98@gmail.com' ,'$2a$12$MQkVUyucQuPNw9gNGNfKEu1fM071zxxMv0ucIRBHFrMWWkmcM8POm', '090333889' ,'Male',	2);
 SELECT * FROM users;
-
 -- ----------------------------
 DROP TABLE IF EXISTS province;
 CREATE TABLE province (
