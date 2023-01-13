@@ -1,7 +1,7 @@
 package com.cybersoft.hotel_booking.config;
+
 import com.cybersoft.hotel_booking.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -35,8 +34,9 @@ public class SecSecurityConfig {
 
         return authenticationManagerBuilder.build();
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -46,13 +46,13 @@ public class SecSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                    .antMatchers("/register").permitAll()
-                    .antMatchers("/signin").permitAll()
-                .anyRequest().authenticated()
-        /**
-         * bật dòng dưới và ẩn filter để không cần đăng nhập
-         */
-//                .anyRequest().permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/signin").permitAll()
+//                .anyRequest().authenticated()
+                /**
+                 * bật dòng dưới và ẩn filter để không cần đăng nhập
+                 */
+                .anyRequest().permitAll()
         ;
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
