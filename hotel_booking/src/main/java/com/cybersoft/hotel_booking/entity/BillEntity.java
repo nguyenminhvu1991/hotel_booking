@@ -37,7 +37,7 @@ public class BillEntity {
 
 //    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_Id")
+    @JoinColumn(name = "users_id")
     private UsersEntity users;
 
     public int getId() {

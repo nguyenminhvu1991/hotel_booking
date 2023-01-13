@@ -64,7 +64,7 @@ public class BookingEntity {
 
 //    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "users_id")
     private UsersEntity users;
 
 //    @JsonIgnore
