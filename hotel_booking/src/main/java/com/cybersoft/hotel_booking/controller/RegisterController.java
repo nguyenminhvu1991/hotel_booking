@@ -1,8 +1,8 @@
 package com.cybersoft.hotel_booking.controller;
 
 import com.cybersoft.hotel_booking.entity.UsersEntity;
-import com.cybersoft.hotel_booking.model.RegisterResponseModel;
 import com.cybersoft.hotel_booking.payload.request.SignInRequest;
+import com.cybersoft.hotel_booking.model.RegisterResponseModel;
 import com.cybersoft.hotel_booking.payload.response.DataResponse;
 import com.cybersoft.hotel_booking.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class RegisterController {
         {
 //                System.out.println("Tài khoản đã được xác nhận");
 //                dataResponse.setData("Tài khoản đã được xác nhận");
-                dataResponse.setData(usersEntity);
+            dataResponse.setData(usersEntity);
         }
         return ResponseEntity.ok(dataResponse);
     }
