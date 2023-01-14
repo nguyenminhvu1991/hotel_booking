@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HotelRepository extends JpaRepository<HotelEntity, Integer> {
 
+    public HotelEntity findByHotelName(String hotelName); //copy tu Mr. Dai 01.13.23
+
 }

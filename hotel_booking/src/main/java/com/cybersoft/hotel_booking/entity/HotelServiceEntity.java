@@ -10,7 +10,7 @@ public class HotelServiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;

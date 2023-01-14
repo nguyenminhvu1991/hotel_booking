@@ -23,7 +23,7 @@ public class AttractionEntity {
 //    @Column(name = "hotelId")
 //    private int hotelId  ;
 
-//    @JsonIgnore
+    @JsonIgnore //Dai uncommented
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;

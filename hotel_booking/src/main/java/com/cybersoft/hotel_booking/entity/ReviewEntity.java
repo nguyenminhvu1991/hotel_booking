@@ -28,7 +28,7 @@ public class ReviewEntity {
 //    @Column(name = "usersId")
 //    private int usersId ;
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;

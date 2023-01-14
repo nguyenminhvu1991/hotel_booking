@@ -2,6 +2,7 @@ package com.cybersoft.hotel_booking.controller;
 
 import com.cybersoft.hotel_booking.entity.HotelEntity;
 import com.cybersoft.hotel_booking.payload.response.DataResponse;
+import com.cybersoft.hotel_booking.repository.HotelRepository;
 import com.cybersoft.hotel_booking.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,14 @@ import java.util.List;
 public class HotelController {
     @Autowired
     private HotelService hotelService;
+
+    @Autowired
+    private HotelRepository hotelRepository;
+
+    @PostMapping("/findall")
+    public List<HotelEntity> findall() {
+        return hotelRepository.findAll();
+    }
 
     //CRUD
     @PostMapping("/add")
