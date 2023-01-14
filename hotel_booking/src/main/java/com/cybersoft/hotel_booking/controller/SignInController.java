@@ -96,14 +96,14 @@ public class SignInController {
             return ResponseEntity.ok(usersService.invalidToken(token));
         }
         else
-        return ResponseEntity.ok("không có token");
+            return ResponseEntity.ok("không có token");
     }
     @PostMapping("/newpassword/{email}")
-    public ResponseEntity<?> newPassord(@PathVariable("email") String email,@Valid @RequestBody NewPasswordRequest newPasswordRequest) {
-        return ResponseEntity.ok(signinService.newPassord(email, newPasswordRequest.getPassword(), newPasswordRequest.getPasswordConfirm()));
+    public ResponseEntity<?> newPassword(@PathVariable("email") String email,@Valid @RequestBody NewPasswordRequest newPasswordRequest) {
+        return ResponseEntity.ok(signinService.newPassword(email, newPasswordRequest.getPassword(), newPasswordRequest.getPasswordConfirm()));
     }
     @PostMapping("/forgetpassword/{email}")
-    public ResponseEntity<?> forgetPassord(@PathVariable("email") String email, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+    public ResponseEntity<?> forgetPasword(@PathVariable("email") String email, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
         String verifyURL = request.getRequestURL().toString()
                 .replace(request.getServletPath(), "") + "/signin/newpassword/"+email;
         registerService.sendVerificationEmail(email,verifyURL);
