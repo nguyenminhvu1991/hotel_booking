@@ -14,7 +14,7 @@ public class RolesEntity {
     @Column(name = "role_name")
     private String roleName;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "roles")
     Set<UsersEntity> usersEntitySet;
 

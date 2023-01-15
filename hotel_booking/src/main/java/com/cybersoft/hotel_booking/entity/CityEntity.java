@@ -23,7 +23,7 @@ public class CityEntity {
     @JoinColumn(name = "province_id")
     private ProvinceEntity province;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "city")
     Set<HotelEntity> hotelEntitySet;
 

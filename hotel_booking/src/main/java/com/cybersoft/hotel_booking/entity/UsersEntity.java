@@ -42,15 +42,15 @@ public class UsersEntity {
     @JoinColumn(name = "role_id")
     private RolesEntity roles;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "users")
     Set<ReviewEntity> reviewEntitySet;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "users")
     Set<BookingEntity> bookingEntitySet;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "users")
     Set<BillEntity> billEntitySet;
 
