@@ -21,7 +21,7 @@ public class HotelController {
     @Autowired
     private HotelRepository hotelRepository;
 
-    @PostMapping("/findall")
+    @PostMapping("/findall") //Still keep this for Mr. Dai
     public List<HotelEntity> findall() {
         return hotelRepository.findAll();
     }
@@ -128,28 +128,28 @@ public class HotelController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteAllHotel() {
-        DataResponse dataResponse = new DataResponse();
-
-        boolean success = hotelService.deleteAllHotel();
-
-        if (!success) {//NO CONTENT
-            dataResponse.setStatus(HttpStatus.NO_CONTENT.value());//204
-            dataResponse.setDesc(HttpStatus.NO_CONTENT.getReasonPhrase());//NO CONTENT
-            dataResponse.setSuccess(false);
-            dataResponse.setData("");
-
-            return ResponseEntity.ok(dataResponse);
-        }
-
-        dataResponse.setStatus(HttpStatus.OK.value());//200
-        dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
-        dataResponse.setSuccess(true);
-        dataResponse.setData("");
-
-        return ResponseEntity.ok(dataResponse);
-    }
+//    @DeleteMapping("") //comment by Vu
+//    public ResponseEntity<?> deleteAllHotel() {
+//        DataResponse dataResponse = new DataResponse();
+//
+//        boolean success = hotelService.deleteAllHotel();
+//
+//        if (!success) {//NO CONTENT
+//            dataResponse.setStatus(HttpStatus.NO_CONTENT.value());//204
+//            dataResponse.setDesc(HttpStatus.NO_CONTENT.getReasonPhrase());//NO CONTENT
+//            dataResponse.setSuccess(false);
+//            dataResponse.setData("");
+//
+//            return ResponseEntity.ok(dataResponse);
+//        }
+//
+//        dataResponse.setStatus(HttpStatus.OK.value());//200
+//        dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
+//        dataResponse.setSuccess(true);
+//        dataResponse.setData("");
+//
+//        return ResponseEntity.ok(dataResponse);
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteHotelById(@PathVariable("id") Integer id) {

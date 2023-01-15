@@ -10,6 +10,6 @@ public interface HotelService {
     List<HotelEntity> findAllHotel();
     HotelEntity findHotelById(int id);
     HotelEntity updateHotel(int id, HotelEntity hotelEntity);
-    boolean deleteAllHotel();
+//    boolean deleteAllHotel(); //comment by Vu
     boolean deleteHotelById(int id);
 }

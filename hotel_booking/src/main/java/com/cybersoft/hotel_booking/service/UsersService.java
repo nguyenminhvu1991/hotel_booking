@@ -15,6 +15,6 @@ public interface UsersService {
     List<UsersEntity> findAllUsers();
     UsersEntity findUsersById(int id);
     UsersEntity updateUsers(int id, UsersEntity usersEntity);
-    boolean deleteAllUsers();
+//    boolean deleteAllUsers(); //comment by Vu
     boolean deleteUsersById(int id);
 }

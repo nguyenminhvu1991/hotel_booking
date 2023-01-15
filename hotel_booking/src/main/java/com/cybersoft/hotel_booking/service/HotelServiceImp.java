@@ -39,15 +39,15 @@ public class HotelServiceImp implements HotelService {
         return null;
     }
 
-    @Override
-    public boolean deleteAllHotel() {
-        List<HotelEntity> hotelEntityList = hotelRepository.findAll();
-        if (!hotelEntityList.isEmpty()) {
-            hotelRepository.deleteAll();
-            return true;
-        }
-        return false;
-    }
+//    @Override //comment by Vu
+//    public boolean deleteAllHotel() {
+//        List<HotelEntity> hotelEntityList = hotelRepository.findAll();
+//        if (!hotelEntityList.isEmpty()) {
+//            hotelRepository.deleteAll();
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     public boolean deleteHotelById(int id) {

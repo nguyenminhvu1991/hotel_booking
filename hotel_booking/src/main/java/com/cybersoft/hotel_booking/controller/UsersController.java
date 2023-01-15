@@ -119,28 +119,28 @@ public class UsersController {
         return ResponseEntity.ok(dataResponse);
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteAllUsers() {
-        DataResponse dataResponse = new DataResponse();
-
-        boolean success = usersService.deleteAllUsers();
-
-        if (!success) {//NO CONTENT
-            dataResponse.setStatus(HttpStatus.NO_CONTENT.value());//204
-            dataResponse.setDesc(HttpStatus.NO_CONTENT.getReasonPhrase());//NO CONTENT
-            dataResponse.setSuccess(false);
-            dataResponse.setData("");
-
-            return ResponseEntity.ok(dataResponse);
-        }
-
-        dataResponse.setStatus(HttpStatus.OK.value());//200
-        dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
-        dataResponse.setSuccess(true);
-        dataResponse.setData("");
-
-        return ResponseEntity.ok(dataResponse);
-    }
+//    @DeleteMapping("") //comment by Vu
+//    public ResponseEntity<?> deleteAllUsers() {
+//        DataResponse dataResponse = new DataResponse();
+//
+//        boolean success = usersService.deleteAllUsers();
+//
+//        if (!success) {//NO CONTENT
+//            dataResponse.setStatus(HttpStatus.NO_CONTENT.value());//204
+//            dataResponse.setDesc(HttpStatus.NO_CONTENT.getReasonPhrase());//NO CONTENT
+//            dataResponse.setSuccess(false);
+//            dataResponse.setData("");
+//
+//            return ResponseEntity.ok(dataResponse);
+//        }
+//
+//        dataResponse.setStatus(HttpStatus.OK.value());//200
+//        dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
+//        dataResponse.setSuccess(true);
+//        dataResponse.setData("");
+//
+//        return ResponseEntity.ok(dataResponse);
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUsersById(@PathVariable("id") Integer id) {

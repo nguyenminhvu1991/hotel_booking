@@ -62,15 +62,15 @@ public class UsersServiceImp implements UsersService {
         return null;
     }
 
-    @Override
-    public boolean deleteAllUsers() {
-        List<UsersEntity> usersEntityList = usersRepository.findAll();
-        if (!usersEntityList.isEmpty()) {
-            usersRepository.deleteAll();
-            return true;
-        }
-        return false;
-    }
+//    @Override //comment by Vu
+//    public boolean deleteAllUsers() {
+//        List<UsersEntity> usersEntityList = usersRepository.findAll();
+//        if (!usersEntityList.isEmpty()) {
+//            usersRepository.deleteAll();
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     public boolean deleteUsersById(int id) {
