@@ -36,7 +36,7 @@ public class HotelEntity {
 //    @Column(name = "cityId")
 //    private int cityId;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "city_id")
     private CityEntity city;
