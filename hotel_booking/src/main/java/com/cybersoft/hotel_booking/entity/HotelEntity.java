@@ -33,9 +33,6 @@ public class HotelEntity {
     @Column(name = "image")
     private String image;
 
-//    @Column(name = "cityId")
-//    private int cityId;
-
 //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "city_id")

@@ -20,8 +20,6 @@ public class AttractionEntity {
     @Column(name = "image")
     private String image ;
 
-//    @Column(name = "hotelId")
-//    private int hotelId  ;
 
     @JsonIgnore //Dai uncommented
     @ManyToOne

@@ -12,28 +12,27 @@ public class BookingRoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "check_in")
-    @Temporal(TemporalType.DATE)
-    private Date checkIn;
-
-    @Column(name = "check_out")
-    @Temporal(TemporalType.DATE)
-    private Date checkOut;
-
-    @Column(name = "room_name")
-    private String roomName;
-
-    @Column(name = "price")
-    private float price;
-
-    @Column(name = "offer_status")
-    private int offerStatus;
+//    @Column(name = "check_in")
+//    @Temporal(TemporalType.DATE)
+//    private Date checkIn;
+//    @Column(name = "check_out")
+//    @Temporal(TemporalType.DATE)
+//    private Date checkOut;
+//
+//    @Column(name = "room_name")
+//    private String roomName;
+//
+//    @Column(name = "price")
+//    private float price;
+//
+//    @Column(name = "offer_status")
+//    private int offerStatus;
 
     @Column(name = "chosen_status")
     private int chosenStatus;
 
-    @Column(name = "hotel_id")
-    private int hotelId;
+//    @Column(name = "hotel_id")
+//    private int hotelId;
 
 //    @JsonIgnore
     @ManyToOne
@@ -53,45 +52,45 @@ public class BookingRoomEntity {
         this.id = id;
     }
 
-    public Date getCheckIn() {
-        return checkIn;
-    }
-
-    public void setCheckIn(Date checkIn) {
-        this.checkIn = checkIn;
-    }
-
-    public Date getCheckOut() {
-        return checkOut;
-    }
-
-    public void setCheckOut(Date checkOut) {
-        this.checkOut = checkOut;
-    }
-
-    public String getRoomName() {
-        return roomName;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public int getOfferStatus() {
-        return offerStatus;
-    }
-
-    public void setOfferStatus(int offerStatus) {
-        this.offerStatus = offerStatus;
-    }
+//    public Date getCheckIn() {
+//        return checkIn;
+//    }
+//
+//    public void setCheckIn(Date checkIn) {
+//        this.checkIn = checkIn;
+//    }
+//
+//    public Date getCheckOut() {
+//        return checkOut;
+//    }
+//
+//    public void setCheckOut(Date checkOut) {
+//        this.checkOut = checkOut;
+//    }
+//
+//    public String getRoomName() {
+//        return roomName;
+//    }
+//
+//    public void setRoomName(String roomName) {
+//        this.roomName = roomName;
+//    }
+//
+//    public float getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(float price) {
+//        this.price = price;
+//    }
+//
+//    public int getOfferStatus() {
+//        return offerStatus;
+//    }
+//
+//    public void setOfferStatus(int offerStatus) {
+//        this.offerStatus = offerStatus;
+//    }
 
     public int getChosenStatus() {
         return chosenStatus;
@@ -101,13 +100,13 @@ public class BookingRoomEntity {
         this.chosenStatus = chosenStatus;
     }
 
-    public int getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
-    }
+//    public int getHotelId() {
+//        return hotelId;
+//    }
+//
+//    public void setHotelId(int hotelId) {
+//        this.hotelId = hotelId;
+//    }
 
     public BookingEntity getBooking() {
         return booking;

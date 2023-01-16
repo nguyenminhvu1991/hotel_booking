@@ -50,9 +50,9 @@ public class UsersEntity {
     @OneToMany(mappedBy = "users")
     Set<BookingEntity> bookingEntitySet;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "users")
-    Set<BillEntity> billEntitySet;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "users")
+//    Set<BillEntity> billEntitySet;
 
     public int getId() {
         return id;
@@ -142,11 +142,11 @@ public class UsersEntity {
         this.bookingEntitySet = bookingEntitySet;
     }
 
-    public Set<BillEntity> getBillEntitySet() {
-        return billEntitySet;
-    }
-
-    public void setBillEntitySet(Set<BillEntity> billEntitySet) {
-        this.billEntitySet = billEntitySet;
-    }
+//    public Set<BillEntity> getBillEntitySet() {
+//        return billEntitySet;
+//    }
+//
+//    public void setBillEntitySet(Set<BillEntity> billEntitySet) {
+//        this.billEntitySet = billEntitySet;
+//    }
 }

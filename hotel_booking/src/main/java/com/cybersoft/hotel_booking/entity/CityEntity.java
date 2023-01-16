@@ -15,8 +15,6 @@ public class CityEntity {
     @Column(name = "city")
     private String city;
 
-//    @Column(name = "provinceId")
-//    private int provinceId;
 
 //    @JsonIgnore
     @ManyToOne

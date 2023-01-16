@@ -24,15 +24,6 @@ public class RoomEntity {
     @Column(name = "price")
     private float price;
 
-//    @Column(name = "hotelId")
-//    private int hotelId;
-//
-//    @Column(name = "bedCategoryId")
-//    private int bedCategoryId;
-//
-//    @Column(name = "roomCategoryId")
-//    private int roomCategoryId;
-
 //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hotel_id")
