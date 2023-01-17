@@ -13,8 +13,7 @@ public interface UsersService {
     //CRUD
     UsersEntity addUsers(UsersEntity usersEntity);
     List<UsersEntity> findAllUsers();
-    UsersEntity findUsersById(int id);
-    UsersEntity updateUsers(int id, UsersEntity usersEntity);
-//    boolean deleteAllUsers(); //comment by Vu
-    boolean deleteUsersById(int id);
+    UsersEntity findUsersById(Integer id);
+    UsersEntity updateUsers(Integer id, UsersEntity usersEntity);
+    boolean deleteUsersById(Integer id);
 }
