@@ -48,34 +48,24 @@ public class UsersServiceImp implements UsersService {
     }
 
     @Override
-    public UsersEntity findUsersById(int id) {
+    public UsersEntity findUsersById(Integer id) {
         return usersRepository.findById(id).orElse(null);
     }
 
     @Override
-    public UsersEntity updateUsers(int id, UsersEntity usersEntity) {
-        UsersEntity usersEntityFromDB = usersRepository.findById(id).orElse(null);
-        if (usersEntityFromDB != null) {
+    public UsersEntity updateUsers(Integer id, UsersEntity usersEntity) {
+        boolean exist = usersRepository.existsById(id);
+        if (exist) {
             usersEntity.setId(id);
             return usersRepository.save(usersEntity);
         }
         return null;
     }
 
-//    @Override //comment by Vu
-//    public boolean deleteAllUsers() {
-//        List<UsersEntity> usersEntityList = usersRepository.findAll();
-//        if (!usersEntityList.isEmpty()) {
-//            usersRepository.deleteAll();
-//            return true;
-//        }
-//        return false;
-//    }
-
     @Override
-    public boolean deleteUsersById(int id) {
-        UsersEntity usersEntityFromDB = usersRepository.findById(id).orElse(null);
-        if (usersEntityFromDB != null) {
+    public boolean deleteUsersById(Integer id) {
+        boolean exist = usersRepository.existsById(id);
+        if (exist) {
             usersRepository.deleteById(id);
             return true;
         }

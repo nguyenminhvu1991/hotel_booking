@@ -8,8 +8,7 @@ public interface HotelService {
     //CRUD
     HotelEntity addHotel(HotelEntity hotelEntity);
     List<HotelEntity> findAllHotel();
-    HotelEntity findHotelById(int id);
-    HotelEntity updateHotel(int id, HotelEntity hotelEntity);
-//    boolean deleteAllHotel(); //comment by Vu
-    boolean deleteHotelById(int id);
+    HotelEntity findHotelById(Integer id);
+    HotelEntity updateHotel(Integer id, HotelEntity hotelEntity);
+    boolean deleteHotelById(Integer id);
 }
