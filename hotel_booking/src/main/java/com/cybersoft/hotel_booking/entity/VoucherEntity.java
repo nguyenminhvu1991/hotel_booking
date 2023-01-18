@@ -23,7 +23,7 @@ public class VoucherEntity {
     @Temporal(TemporalType.DATE)
     private Date expiredDate;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "voucher")
     Set<BookingEntity> bookingEntitySet;
 

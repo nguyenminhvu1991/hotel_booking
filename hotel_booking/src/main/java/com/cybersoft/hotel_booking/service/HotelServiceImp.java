@@ -25,34 +25,24 @@ public class HotelServiceImp implements HotelService {
     }
 
     @Override
-    public HotelEntity findHotelById(int id) {
+    public HotelEntity findHotelById(Integer id) {
         return hotelRepository.findById(id).orElse(null);
     }
 
     @Override
-    public HotelEntity updateHotel(int id, HotelEntity hotelEntity) {
-        HotelEntity hotelEntityFromDB = hotelRepository.findById(id).orElse(null);
-        if (hotelEntityFromDB != null) {
+    public HotelEntity updateHotel(Integer id, HotelEntity hotelEntity) {
+        boolean exist = hotelRepository.existsById(id);
+        if (exist) {
             hotelEntity.setId(id);
             return hotelRepository.save(hotelEntity);
         }
         return null;
     }
 
-//    @Override //comment by Vu
-//    public boolean deleteAllHotel() {
-//        List<HotelEntity> hotelEntityList = hotelRepository.findAll();
-//        if (!hotelEntityList.isEmpty()) {
-//            hotelRepository.deleteAll();
-//            return true;
-//        }
-//        return false;
-//    }
-
     @Override
-    public boolean deleteHotelById(int id) {
-        HotelEntity hotelEntityFromDB = hotelRepository.findById(id).orElse(null);
-        if (hotelEntityFromDB != null) {
+    public boolean deleteHotelById(Integer id) {
+        boolean exist = hotelRepository.existsById(id);
+        if (exist) {
             hotelRepository.deleteById(id);
             return true;
         }

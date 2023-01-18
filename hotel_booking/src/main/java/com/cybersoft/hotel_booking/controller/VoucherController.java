@@ -1,9 +1,8 @@
 package com.cybersoft.hotel_booking.controller;
 
-import com.cybersoft.hotel_booking.entity.HotelEntity;
+import com.cybersoft.hotel_booking.entity.VoucherEntity;
 import com.cybersoft.hotel_booking.payload.response.DataResponse;
-import com.cybersoft.hotel_booking.repository.HotelRepository;
-import com.cybersoft.hotel_booking.service.HotelService;
+import com.cybersoft.hotel_booking.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,22 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/hotel")
-public class HotelController {
+@RequestMapping("/voucher")
+public class VoucherController {
     @Autowired
-    private HotelService hotelService;
-
-    @Autowired
-    private HotelRepository hotelRepository;
-
-    @PostMapping("/findall") //Still keep this for Mr. Dai
-    public List<HotelEntity> findall() {
-        return hotelRepository.findAll();
-    }
+    private VoucherService voucherService;
 
     //CRUD
     @PostMapping("")
-    public ResponseEntity<?> addHotel(@RequestBody HotelEntity hotelEntity, BindingResult bindingResult) {
+    public ResponseEntity<?> addVoucher(@RequestBody VoucherEntity voucherEntity, BindingResult bindingResult) {
         DataResponse dataResponse = new DataResponse();
 
         if (bindingResult.hasErrors()) {//BAD REQUEST
@@ -40,23 +31,23 @@ public class HotelController {
             return ResponseEntity.ok(dataResponse);
         }
 
-        HotelEntity hotelEntityAdded = hotelService.addHotel(hotelEntity);
+        VoucherEntity voucherEntityAdded = voucherService.addVoucher(voucherEntity);
 
         dataResponse.setStatus(HttpStatus.CREATED.value());//201
         dataResponse.setDesc(HttpStatus.CREATED.getReasonPhrase());//CREATED
         dataResponse.setSuccess(true);
-        dataResponse.setData(hotelEntityAdded);
+        dataResponse.setData(voucherEntityAdded);
 
         return ResponseEntity.ok(dataResponse);
     }
 
     @GetMapping("")
-    public ResponseEntity<?> findAllHotel() {
+    public ResponseEntity<?> findAllVoucher() {
         DataResponse dataResponse = new DataResponse();
 
-        List<HotelEntity> hotelEntityList = hotelService.findAllHotel();
+        List<VoucherEntity> voucherEntityList = voucherService.findAllVoucher();
 
-        if (hotelEntityList.isEmpty()) {//NO CONTENT
+        if (voucherEntityList.isEmpty()) {//NO CONTENT
             dataResponse.setStatus(HttpStatus.NO_CONTENT.value());//204
             dataResponse.setDesc(HttpStatus.NO_CONTENT.getReasonPhrase());//NO CONTENT
             dataResponse.setSuccess(false);
@@ -68,18 +59,18 @@ public class HotelController {
         dataResponse.setStatus(HttpStatus.OK.value());//200
         dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
         dataResponse.setSuccess(true);
-        dataResponse.setData(hotelEntityList);
+        dataResponse.setData(voucherEntityList);
 
         return ResponseEntity.ok(dataResponse);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findHotelById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> findVoucherById(@PathVariable("id") Integer id) {
         DataResponse dataResponse = new DataResponse();
 
-        HotelEntity hotelEntity = hotelService.findHotelById(id);
+        VoucherEntity voucherEntity = voucherService.findVoucherById(id);
 
-        if (hotelEntity == null) {//NOT FOUND
+        if (voucherEntity == null) {//NOT FOUND
             dataResponse.setStatus(HttpStatus.NOT_FOUND.value());//404
             dataResponse.setDesc(HttpStatus.NOT_FOUND.getReasonPhrase());//NOT FOUND
             dataResponse.setSuccess(false);
@@ -91,13 +82,13 @@ public class HotelController {
         dataResponse.setStatus(HttpStatus.OK.value());//200
         dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
         dataResponse.setSuccess(true);
-        dataResponse.setData(hotelEntity);
+        dataResponse.setData(voucherEntity);
 
         return ResponseEntity.ok(dataResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateHotel(@PathVariable("id") Integer id, @RequestBody HotelEntity hotelEntity, BindingResult bindingResult) {
+    public ResponseEntity<?> updateVoucher(@PathVariable("id") Integer id, @RequestBody VoucherEntity voucherEntity, BindingResult bindingResult) {
         DataResponse dataResponse = new DataResponse();
 
         if (bindingResult.hasErrors()) {//BAD REQUEST
@@ -109,9 +100,9 @@ public class HotelController {
             return ResponseEntity.ok(dataResponse);
         }
 
-        HotelEntity hotelEntityUpdated = hotelService.updateHotel(id, hotelEntity);
+        VoucherEntity voucherEntityUpdated = voucherService.updateVoucher(id, voucherEntity);
 
-        if (hotelEntityUpdated == null) {//NOT FOUND
+        if (voucherEntityUpdated == null) {//NOT FOUND
             dataResponse.setStatus(HttpStatus.NOT_FOUND.value());//404
             dataResponse.setDesc(HttpStatus.NOT_FOUND.getReasonPhrase());//NOT FOUND
             dataResponse.setSuccess(false);
@@ -123,16 +114,16 @@ public class HotelController {
         dataResponse.setStatus(HttpStatus.OK.value());//200
         dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
         dataResponse.setSuccess(true);
-        dataResponse.setData(hotelEntityUpdated);
+        dataResponse.setData(voucherEntityUpdated);
 
         return ResponseEntity.ok(dataResponse);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteHotelById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteVoucherById(@PathVariable("id") Integer id) {
         DataResponse dataResponse = new DataResponse();
 
-        boolean success = hotelService.deleteHotelById(id);
+        boolean success = voucherService.deleteVoucherById(id);
 
         if (!success) {//NOT FOUND
             dataResponse.setStatus(HttpStatus.NOT_FOUND.value());//404
