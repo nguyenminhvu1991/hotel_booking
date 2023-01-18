@@ -15,7 +15,7 @@ public class BedCategoryEntity {
     @Column(name = "bed_category")
     private String bedCategory;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "bedCategoryEntity")
     Set<RoomEntity> room;
 

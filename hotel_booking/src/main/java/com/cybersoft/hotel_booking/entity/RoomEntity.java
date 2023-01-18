@@ -39,11 +39,11 @@ public class RoomEntity {
     @JoinColumn(name = "room_category_id")
     private RoomCategoryEntity roomCategoryEntity;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     Set<RoomDatesEntity> roomDatesEntitySet;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     Set<BookingRoomEntity> bookingRoomEntitySet;
 

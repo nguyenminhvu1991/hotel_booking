@@ -447,7 +447,7 @@ check_out date DEFAULT NULL,
 adult_number int DEFAULT NULL,
 child_number int DEFAULT NULL,
 voucher_id int DEFAULT NULL, 
-issued_date date DEFAULT NULL,
+issued_date date DEFAULT (CURRENT_DATE),
 paid_date date DEFAULT NULL,
 cancel_date date DEFAULT NULL, 
 booking_status varchar (100) DEFAULT NULL, -- open, complete, cancel
@@ -458,9 +458,12 @@ PRIMARY KEY (id),
 FOREIGN KEY (voucher_id) REFERENCES voucher (id),-- ON DELETE CASCADE,
 FOREIGN KEY (users_id) REFERENCES users (id)-- ON DELETE CASCADE,
 );
-SELECT * FROM booking;
 
--- CẦN BỔ SUNG THÊM CÂU LỆNH INSERT 1 BOOKING ĐƯỢC THỰC HIỆN TẠO 1 BOOKING
+INSERT INTO booking (users_id, check_in,  check_out , adult_number, child_number ,  paid_date, booking_status, total_price, payment_method) VALUES
+(3, '2023-01-01', '2023-01-05', 2 , 1, '2023-01-05', 'open', 10000, 'Paypal' ),
+(4, '2023-01-18', '2023-01-19', 1 , 0, '2023-01-19', 'complete', 12000, 'Visa Credit' );
+
+SELECT * FROM booking;
 -- -------------------------------
 -- chủ yếu replicate dữ liệu từ bảng Booking và 1 số thông tin từ Input 
 -- DROP TABLE IF EXISTS bill; --comment by Vu 15/01/23
@@ -495,7 +498,6 @@ room_id int DEFAULT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (booking_id) REFERENCES booking (id),-- ON DELETE CASCADE,
 FOREIGN KEY (room_id) REFERENCES room (id)-- ON DELETE CASCADE,
--- FOREIGN KEY (hotel_id) REFERENCES hotel (id)-- ON DELETE CASCADE, --comment by Vu 15/01/23
 );
 -- --------------------------------------
 -- DROP TABLE IF EXISTS booking_room_dates; --comment by Vu 15/01/23
@@ -585,7 +587,60 @@ SET booking_room.offerStatus = offer_status.offerStatus;
 -- WHERE booking_room.bookingId = 1; -- ? -- lấy thông tin từ người dùng
 -- đang tắt safe mode
 
-SELECT * FROM booking_room;
+-- ----------------------------
+
+SELECT hotel_id, hotel_name, address, description, image, hotel_rank, avg_rate_score, rate_count,
+booking_id, room_id, max_occupy_adult, max_occupy_child, price, room_category, bed_category
+FROM
+(SELECT hotel.hotel_id, hotel.hotel_name, hotel.address, hotel.description, hotel.image, hotel.hotel_rank, hotel.avg_rate_score, hotel.rate_count
+, booking.id as booking_id
+, room.id as room_id, room.max_occupy_adult, room.max_occupy_child, room.price, room_category.room_category,  bed_category.bed_category
+, room_dates.room_status
+, SUM(room_dates.room_status) OVER (PARTITION BY booking.id, room.id) AS sum_status
+, count(room_dates.room_status) OVER (PARTITION BY booking.id, room.id) AS count_status
+FROM
+(SELECT h.id AS hotel_id
+, h.hotel_name
+, h.address
+, h.description
+, h.image
+, h.hotel_rank
+, avg(rv.rate_score) AS avg_rate_score 
+, count(rv.rate_score) AS rate_count 
+FROM hotel AS h 
+INNER JOIN review AS rv
+ON h.id = rv.hotel_id
+WHERE h.id = 1 -- INPUT
+GROUP BY 1,2,3,4,5,6) AS hotel
+
+INNER JOIN room
+ON room.hotel_id = hotel.hotel_id
+
+CROSS JOIN booking
+
+INNER JOIN room_dates
+ON room.id = room_dates.room_id
+
+INNER JOIN bed_category
+ON bed_category.id = room.bed_category_id
+
+INNER JOIN room_category
+ON room_category.id = room.room_category_id
+
+WHERE booking.id = 1 -- INPUT 
+AND room.max_occupy_adult >= booking.adult_number
+AND room.max_occupy_adult  >= booking.child_number
+
+AND room_dates.dt >= booking.check_in
+AND   room_dates.dt < booking.check_out
+) AS b
+WHERE b.sum_status = b.count_status
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+
+-- update room_dates set room_status = 0 where id =36
+-- select * from room_dates
+
+
 
 
 
