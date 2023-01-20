@@ -1,22 +1,58 @@
 package com.cybersoft.hotel_booking.controller;
+//package com.cybersoft.hotel_booking.API;
 
+import com.cybersoft.hotel_booking.DTO.CityHotelDTO;
+import com.cybersoft.hotel_booking.DTO.HotelDetailDTO;
+import com.cybersoft.hotel_booking.DTO.RoomDetailDTO;
+import com.cybersoft.hotel_booking.entity.CityEntity;
 import com.cybersoft.hotel_booking.entity.HotelEntity;
+import com.cybersoft.hotel_booking.model.AttractionModel;
 import com.cybersoft.hotel_booking.payload.response.DataResponse;
+import com.cybersoft.hotel_booking.repository.CityRepository;
+import com.cybersoft.hotel_booking.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.cybersoft.hotel_booking.repository.HotelRepository;
 import com.cybersoft.hotel_booking.service.HotelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/hotel")
 public class HotelController {
+
     @Autowired
-    private HotelService hotelService;
+    HotelService hotelService;
+    @Autowired
+    AttractionService attractionService;
+    @Autowired
+    ReviewHotelService reviewHotelService;
+    @Autowired
+    //@Qualifier("city")//Vũ comment từ Hưng
+    CityService cityService;
+
+//    @Autowired
+//    ServiceHotelService serviceHotelService;
+    @Autowired
+    ServiceService serviceService;
+
+//    @Autowired
+//    ServiceOfHotelService serviceOfHotelService;
+    @Autowired
+    HotelServiceService hotelServiceService;
+    @Autowired
+    RoomService roomService;
+    @Autowired
+    CityRepository cityRepository;
 
     @Autowired
     private HotelRepository hotelRepository;
@@ -25,6 +61,77 @@ public class HotelController {
     public List<HotelEntity> findall() {
         return hotelRepository.findAll();
     }
+
+    @GetMapping("/detail") //hotel detail api by Hưng
+    public ResponseEntity<?> getHotel(@RequestParam("id") int id){
+        System.out.println("pass running 1");
+        DataResponse dataResponse = new DataResponse();
+        Optional<HotelEntity> hotelEntity = hotelService.findById(id);
+        if(!hotelEntity.isPresent()){
+            dataResponse.setStatus(HttpStatus.NOT_FOUND.value());
+            dataResponse.setSuccess(false);
+            dataResponse.setDesc("Tìm Hotel thất bại ");
+            dataResponse.setData(null);
+            return new ResponseEntity<>(dataResponse,HttpStatus.NOT_FOUND);
+        }else {
+            System.out.println("pass running 2");
+            HotelDetailDTO hotelDetailDTO = new HotelDetailDTO();
+            hotelDetailDTO.setId(hotelEntity.get().getId());
+            hotelDetailDTO.setHotelName(hotelEntity.get().getHotelName());
+            hotelDetailDTO.setAddress(hotelEntity.get().getAddress());
+            hotelDetailDTO.setEmail(hotelEntity.get().getEmail());
+            hotelDetailDTO.setPhone(hotelEntity.get().getPhone());
+            hotelDetailDTO.setDescription(hotelEntity.get().getDescription());
+            hotelDetailDTO.setImage(hotelEntity.get().getImage());
+            hotelDetailDTO.setHotelRank(hotelEntity.get().getHotelRank());
+            hotelDetailDTO.setAvgRate(reviewHotelService.findAvgRateByHotelId(id));
+            hotelDetailDTO.setRateCount(reviewHotelService.findReviewsByHotelId(id).size());
+            //hotelDetailDTO.setCityId(hotelEntity.get().getCityId());
+            //hotelDetailDTO.setCityId(hotelEntity.get().getCity().getId());
+            hotelDetailDTO.setCity(hotelEntity.get().getCity().getCity());
+
+            //hotelDetailDTO.setCityDetailDTO(cityService.findByCityId(hotelEntity.get().getCityId())); //Vũ comment từ Hưng
+            //hotelDetailDTO.setCityDetailDTO(cityService.findByCityId(hotelEntity.get().getCity().getId())); //Vũ comment từ Hưng
+
+            //hotelDetailDTO.setServiceModelList(serviceOfHotelService.findServiceByHotelId(id));
+            hotelDetailDTO.setServiceModelList(hotelServiceService.findServiceByHotelId(id));
+
+            hotelDetailDTO.setAttractionModelList(attractionService.findAttractionsByHotelId(id));
+            hotelDetailDTO.setReviewHotelModelList(reviewHotelService.findReviewsByHotelId(id));
+            hotelDetailDTO.setRoomDetailDTOList(roomService.findRoomsByHotelId(id));
+            hotelDetailDTO.setMinPriceRoomDetailDTO(
+                    roomService.findRoomsByHotelId(id).stream().min(Comparator.comparingDouble(RoomDetailDTO::getPrice)).get());
+
+
+            dataResponse.setStatus(HttpStatus.OK.value());
+            dataResponse.setSuccess(true);
+            dataResponse.setDesc("Tìm Hotel thành công ");
+            dataResponse.setData(hotelDetailDTO);
+            return new ResponseEntity<>(dataResponse,HttpStatus.OK);
+        }
+    }
+
+    //search all hotel by city id by Hưng => Trùng với Đại
+//    @GetMapping("/city")
+//    public ResponseEntity<?> getHotelInCity(@RequestParam("id") int id){
+//        DataResponse dataResponse = new DataResponse();
+//        Optional<CityEntity> cityEntity = cityRepository.findById(id);
+//        if(!cityEntity.isPresent()){
+//            dataResponse.setStatus(HttpStatus.NOT_FOUND.value());
+//            dataResponse.setSuccess(false);
+//            dataResponse.setDesc("Tìm City thất bại ");
+//            dataResponse.setData(null);
+//            return new ResponseEntity<>(dataResponse,HttpStatus.NOT_FOUND);
+//        }else{
+//            CityHotelDTO cityHotelDTO = cityService.findByIdCity(id);
+//            dataResponse.setStatus(HttpStatus.OK.value());
+//            dataResponse.setSuccess(true);
+//            dataResponse.setDesc("Tìm City thành công ");
+//            dataResponse.setData(cityHotelDTO);
+//            return new ResponseEntity<>(dataResponse,HttpStatus.OK);
+//        }
+//    }
+
 
     //CRUD
     @PostMapping("")

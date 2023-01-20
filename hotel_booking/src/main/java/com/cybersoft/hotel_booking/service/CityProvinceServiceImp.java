@@ -1,5 +1,6 @@
 package com.cybersoft.hotel_booking.service;
 
+import com.cybersoft.hotel_booking.DTO.CityHotelDTO;
 import com.cybersoft.hotel_booking.DTO.CityProvinceDTO;
 import com.cybersoft.hotel_booking.DTO.CitySearchDTO;
 import com.cybersoft.hotel_booking.DTO.ProvinceSearchDTO;
@@ -273,6 +274,16 @@ public class CityProvinceServiceImp implements CityService, ProvinceService {
             list =new ArrayList<>();
         }
         return list;
+    }
+
+    @Override
+    public CityProvinceDTO findByCityId(int id) {
+        return null;
+    }
+
+    @Override
+    public CityHotelDTO findByIdCity(int id) {
+        return null;
     }
 //    private <T extends CitySearchDTO> void abc(T t,List<?> list,List<CityProvinceDTO> cityProvinceDTOS){
 //        for (t: (List<T>) list) {
