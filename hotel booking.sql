@@ -447,8 +447,8 @@ check_out date DEFAULT NULL,
 adult_number int DEFAULT NULL,
 child_number int DEFAULT NULL,
 voucher_id int DEFAULT NULL, 
-issued_date date DEFAULT (CURRENT_DATE),
-paid_date date DEFAULT NULL,
+-- issued_date date DEFAULT (CURRENT_DATE), -- VU cooment
+paid_date date DEFAULT (CURRENT_DATE),
 cancel_date date DEFAULT NULL, 
 booking_status varchar (100) DEFAULT NULL, -- open, complete, cancel
 total_price decimal (10,2) DEFAULT NULL,
@@ -459,12 +459,29 @@ FOREIGN KEY (voucher_id) REFERENCES voucher (id),-- ON DELETE CASCADE,
 FOREIGN KEY (users_id) REFERENCES users (id)-- ON DELETE CASCADE,
 );
 
-INSERT INTO booking (users_id, check_in,  check_out , adult_number, child_number ,  paid_date, booking_status, total_price, payment_method) VALUES
-(3, '2023-01-01', '2023-01-05', 2 , 1, '2023-01-05', 'open', 10000, 'Paypal' ),
-(4, '2023-01-18', '2023-01-19', 1 , 0, '2023-01-19', 'complete', 12000, 'Visa Credit' );
+INSERT INTO booking (users_id, check_in,  check_out , adult_number, child_number , booking_status, total_price, payment_method) VALUES
+(3, '2023-01-01', '2023-01-05', 2 , 1,  'open', 10000, 'Paypal' ),
+(4, '2023-01-18', '2023-01-19', 1 , 0,  'complete', 12000, 'Visa Credit' );
 
 SELECT * FROM booking;
 -- -------------------------------
+DROP TABLE IF EXISTS booking_room;
+CREATE TABLE booking_room (
+id int NOT NULL AUTO_INCREMENT,
+booking_id int DEFAULT NULL ,
+room_id int DEFAULT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (booking_id) REFERENCES booking (id),-- ON DELETE CASCADE,
+FOREIGN KEY (room_id) REFERENCES room (id)-- ON DELETE CASCADE,
+-- check_in date DEFAULT NULL, -- lấy từ Booking --comment by Vu 15/01/23
+-- check_out date DEFAULT NULL, -- lấy từ Booking --comment by Vu 15/01/23
+-- room_name varchar (100) DEFAULT NULL, -- lấy từ room --comment by Vu 15/01/23
+-- price decimal (10,2) DEFAULT NULL, -- lấy từ room --comment by Vu 15/01/23
+-- offer_status int DEFAULT 0, -- 1 (available) or 0 (unavailable) --comment by Vu 15/01/23
+-- chosen_status int DEFAULT 0, -- 1 (KH chọn) or 0 (ko chọn) --comment by Vu
+-- hotel_id int DEFAULT NULL, --comment by Vu 15/01/23
+);
+
 -- chủ yếu replicate dữ liệu từ bảng Booking và 1 số thông tin từ Input 
 -- DROP TABLE IF EXISTS bill; --comment by Vu 15/01/23
 -- CREATE TABLE bill (
@@ -482,24 +499,7 @@ SELECT * FROM booking;
 -- SELECT * FROM bill;
 
 -- CẦN BỔ SUNG THÊM CÂU LỆNH INSERT 1 BOOKING ĐƯỢC THỰC HIỆN THANH TOÁN
--- -----------------------------------
-DROP TABLE IF EXISTS booking_room;
-CREATE TABLE booking_room ( -- dữ liệu cột offerStatus sẽ được update từ bảng offer_status 
-id int NOT NULL AUTO_INCREMENT,
--- check_in date DEFAULT NULL, -- lấy từ Booking --comment by Vu 15/01/23
--- check_out date DEFAULT NULL, -- lấy từ Booking --comment by Vu 15/01/23
--- room_name varchar (100) DEFAULT NULL, -- lấy từ room --comment by Vu 15/01/23
--- price decimal (10,2) DEFAULT NULL, -- lấy từ room --comment by Vu 15/01/23
--- offer_status int DEFAULT 0, -- 1 (available) or 0 (unavailable) --comment by Vu 15/01/23
-chosen_status int DEFAULT 0, -- 1 (KH chọn) or 0 (ko chọn)
-booking_id int DEFAULT NULL ,
-room_id int DEFAULT NULL,
--- hotel_id int DEFAULT NULL, --comment by Vu 15/01/23
-PRIMARY KEY (id),
-FOREIGN KEY (booking_id) REFERENCES booking (id),-- ON DELETE CASCADE,
-FOREIGN KEY (room_id) REFERENCES room (id)-- ON DELETE CASCADE,
-);
--- --------------------------------------
+
 -- DROP TABLE IF EXISTS booking_room_dates; --comment by Vu 15/01/23
 -- CREATE TABLE booking_room_dates (
 -- id int NOT NULL AUTO_INCREMENT,
@@ -523,18 +523,16 @@ FOREIGN KEY (room_id) REFERENCES room (id)-- ON DELETE CASCADE,
 -- offer_status int DEFAULT NULL, -- tính toán từ booking_room_dates
 -- PRIMARY KEY (id));
 
-
-
 -- ------------ DATABASE CREATION ENDS HERE -----------------
 -- ----------------------------------------------------------
 -- ------------------------------- --------------------------
 -- Query dùng để update dữ liệu bảng BOOKING_ROOM (OFFER) sau khi insert dữ liệu mới vào bảng BOOKING
-INSERT INTO booking_room (bookingId, checkIn, checkOut, roomId, hotelId, roomName, price) 
-SELECT b.Id, b.checkIn, b.checkOut, r.Id, r.hotelId, r.roomName, r.price
-FROM booking AS b
-CROSS JOIN room AS r;
--- WHERE bookingId = ?; -- lấy thông tin từ người dùng
-SELECT * FROM booking_room;
+-- INSERT INTO booking_room (bookingId, checkIn, checkOut, roomId, hotelId, roomName, price) 
+-- SELECT b.Id, b.checkIn, b.checkOut, r.Id, r.hotelId, r.roomName, r.price
+-- FROM booking AS b
+-- CROSS JOIN room AS r;
+-- -- WHERE bookingId = ?; -- lấy thông tin từ người dùng
+-- SELECT * FROM booking_room;
 -- ---------------------------------------
 -- insert thông tin bằng query cho bảng này
 -- DROP TABLE IF EXISTS booking_room_dates;
@@ -553,13 +551,13 @@ SELECT * FROM booking_room;
 
 -- Query dùng để update dữ liệu bảng booking_room_dates sau khi insert dữ liệu mới vào bảng BOOKING
 -- bảng này có thể xóa dữ liệu đi sau khi tính toán
-INSERT INTO booking_room_dates (roomDatesId, roomId, dt, roomStatus, bookingId, checkIn, checkOut) 
-SELECT r.id, r.roomId, r.dt, r.roomStatus, b.id, b.checkIn, b.checkOut
-FROM booking AS b
-CROSS JOIN room_dates AS r
-WHERE r.dt >= b.checkIn AND r.dt <= b.checkOut;
--- AND bookingId = ?; -- lấy thông tin từ người dùng
-SELECT * FROM booking_room_dates;
+-- INSERT INTO booking_room_dates (roomDatesId, roomId, dt, roomStatus, bookingId, checkIn, checkOut) 
+-- SELECT r.id, r.roomId, r.dt, r.roomStatus, b.id, b.checkIn, b.checkOut
+-- FROM booking AS b
+-- CROSS JOIN room_dates AS r
+-- WHERE r.dt >= b.checkIn AND r.dt <= b.checkOut;
+-- -- AND bookingId = ?; -- lấy thông tin từ người dùng
+-- SELECT * FROM booking_room_dates;
 -- ------------------------------
 -- bảng này có thể xóa dữ liệu đi sau khi tính toán
 -- DROP TABLE IF EXISTS offer_status;
@@ -571,21 +569,13 @@ SELECT * FROM booking_room_dates;
 -- PRIMARY KEY (id));
 
 -- tính toán để kiểm tra mỗi offer có available hay không
-INSERT INTO offer_status (bookingId, roomId, offerStatus)
-SELECT 
-	  b.bookingId
-	, b.roomId
-    , CASE WHEN sum(roomStatus) OVER (partition by b.bookingId , b.roomId)  = count(roomStatus) OVER (partition by b.bookingId , b.roomId) THEN 1 ELSE 0 END AS offerStatus
-FROM booking_room_dates b;
-SELECT * FROM offer_status;
-
-UPDATE booking_room
-INNER JOIN offer_status 
-ON booking_room.bookingId = offer_status.bookingId
-AND  booking_room.roomId = offer_status.roomId
-SET booking_room.offerStatus = offer_status.offerStatus;
--- WHERE booking_room.bookingId = 1; -- ? -- lấy thông tin từ người dùng
--- đang tắt safe mode
+-- INSERT INTO offer_status (bookingId, roomId, offerStatus)
+-- SELECT 
+-- 	  b.bookingId
+-- 	, b.roomId
+--     , CASE WHEN sum(roomStatus) OVER (partition by b.bookingId , b.roomId)  = count(roomStatus) OVER (partition by b.bookingId , b.roomId) THEN 1 ELSE 0 END AS offerStatus
+-- FROM booking_room_dates b;
+-- SELECT * FROM offer_status;
 
 -- ----------------------------
 
@@ -629,16 +619,40 @@ ON room_category.id = room.room_category_id
 
 WHERE booking.id = 1 -- INPUT 
 AND room.max_occupy_adult >= booking.adult_number
-AND room.max_occupy_adult  >= booking.child_number
+AND room.max_occupy_child  >= booking.child_number
 
 AND room_dates.dt >= booking.check_in
 AND   room_dates.dt < booking.check_out
 ) AS b
 WHERE b.sum_status = b.count_status
 GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+;
 
--- update room_dates set room_status = 0 where id =36
--- select * from room_dates
+-- -----------------------------------------------------
+SELECT -- hotel.id AS hotel_id, 
+hotel.hotel_name,
+room.id as room_id, room.max_occupy_adult, room.max_occupy_child, 
+'2023-01-01' AS check_in, -- input
+'2023-01-05' AS check_out, -- input
+room_category.room_category,  
+bed_category.bed_category,
+room.price * datediff('2023-01-05','2023-01-01') AS sub_total_price -- input 
+FROM hotel
+INNER JOIN room
+ON room.hotel_id = hotel.id
+INNER JOIN room_dates
+ON room.id = room_dates.room_id
+INNER JOIN bed_category
+ON bed_category.id = room.bed_category_id
+INNER JOIN room_category
+ON room_category.id = room.room_category_id
+WHERE hotel_id = 1 -- hotel id input
+AND room.max_occupy_adult >= 2 -- adult_number input
+AND room.max_occupy_child  >= 1 -- child_number input
+AND room_dates.dt >= '2023-01-01' -- check_in input
+AND room_dates.dt < '2023-01-05' -- check_out input
+group by 1,2,3,4,5,6,7,8
+HAVING  SUM(room_dates.room_status) = COUNT(room_dates.room_status)
 
 
 

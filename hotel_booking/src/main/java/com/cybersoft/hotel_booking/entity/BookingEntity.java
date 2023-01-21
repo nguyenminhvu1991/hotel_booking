@@ -36,9 +36,9 @@ public class BookingEntity {
     @Temporal(TemporalType.DATE)
     private Date checkOut;
 
-    @Column(name = "issued_date")
-    @Temporal(TemporalType.DATE)
-    private Date issuedDate;
+//    @Column(name = "issued_date")
+//    @Temporal(TemporalType.DATE)
+//    private Date issuedDate;
 
     @Column(name = "paid_date")
     @Temporal(TemporalType.DATE)
@@ -134,13 +134,13 @@ public class BookingEntity {
         this.checkOut = checkOut;
     }
 
-    public Date getIssuedDate() {
-        return issuedDate;
-    }
-
-    public void setIssuedDate(Date issuedDate) {
-        this.issuedDate = issuedDate;
-    }
+//    public Date getIssuedDate() {
+//        return issuedDate;
+//    }
+//
+//    public void setIssuedDate(Date issuedDate) {
+//        this.issuedDate = issuedDate;
+//    }
 
     public Date getPaidDate() {
         return paidDate;

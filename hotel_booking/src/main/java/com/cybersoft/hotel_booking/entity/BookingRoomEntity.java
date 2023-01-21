@@ -28,8 +28,8 @@ public class BookingRoomEntity {
 //    @Column(name = "offer_status")
 //    private int offerStatus;
 
-    @Column(name = "chosen_status")
-    private int chosenStatus;
+//    @Column(name = "chosen_status")
+//    private int chosenStatus;
 
 //    @Column(name = "hotel_id")
 //    private int hotelId;
@@ -92,13 +92,13 @@ public class BookingRoomEntity {
 //        this.offerStatus = offerStatus;
 //    }
 
-    public int getChosenStatus() {
-        return chosenStatus;
-    }
-
-    public void setChosenStatus(int chosenStatus) {
-        this.chosenStatus = chosenStatus;
-    }
+//    public int getChosenStatus() {
+//        return chosenStatus;
+//    }
+//
+//    public void setChosenStatus(int chosenStatus) {
+//        this.chosenStatus = chosenStatus;
+//    }
 
 //    public int getHotelId() {
 //        return hotelId;
