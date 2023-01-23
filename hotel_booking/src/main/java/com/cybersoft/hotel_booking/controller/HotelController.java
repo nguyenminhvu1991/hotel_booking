@@ -9,6 +9,7 @@ import com.cybersoft.hotel_booking.entity.HotelEntity;
 import com.cybersoft.hotel_booking.model.AttractionModel;
 import com.cybersoft.hotel_booking.payload.response.DataResponse;
 import com.cybersoft.hotel_booking.repository.CityRepository;
+import com.cybersoft.hotel_booking.repository.ReviewHotelRepository;
 import com.cybersoft.hotel_booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,6 +58,10 @@ public class HotelController {
     @Autowired
     private HotelRepository hotelRepository;
 
+    @Autowired
+    ReviewHotelRepository reviewHotelRepository;
+
+
     @PostMapping("/findall") //Still keep this for Mr. Dai
     public List<HotelEntity> findall() {
         return hotelRepository.findAll();
@@ -89,18 +94,14 @@ public class HotelController {
             //hotelDetailDTO.setCityId(hotelEntity.get().getCityId());
             //hotelDetailDTO.setCityId(hotelEntity.get().getCity().getId());
             hotelDetailDTO.setCity(hotelEntity.get().getCity().getCity());
-
             //hotelDetailDTO.setCityDetailDTO(cityService.findByCityId(hotelEntity.get().getCityId())); //Vũ comment từ Hưng
             //hotelDetailDTO.setCityDetailDTO(cityService.findByCityId(hotelEntity.get().getCity().getId())); //Vũ comment từ Hưng
-
             //hotelDetailDTO.setServiceModelList(serviceOfHotelService.findServiceByHotelId(id));
             hotelDetailDTO.setServiceModelList(hotelServiceService.findServiceByHotelId(id));
-
             hotelDetailDTO.setAttractionModelList(attractionService.findAttractionsByHotelId(id));
             hotelDetailDTO.setReviewHotelModelList(reviewHotelService.findReviewsByHotelId(id));
             hotelDetailDTO.setRoomDetailDTOList(roomService.findRoomsByHotelId(id));
-            hotelDetailDTO.setMinPriceRoomDetailDTO(
-                    roomService.findRoomsByHotelId(id).stream().min(Comparator.comparingDouble(RoomDetailDTO::getPrice)).get());
+            hotelDetailDTO.setMinPriceRoomDetailDTO(roomService.findRoomsByHotelId(id).stream().min(Comparator.comparingDouble(RoomDetailDTO::getPrice)).get());
 
 
             dataResponse.setStatus(HttpStatus.OK.value());

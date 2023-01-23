@@ -244,7 +244,7 @@ CREATE TABLE review (
 id int NOT NULL AUTO_INCREMENT,
 content varchar(255) DEFAULT NULL,
 rate_score decimal(4,2) DEFAULT NULL,
-created_date date DEFAULT NULL,
+created_date date DEFAULT (current_date),
 hotel_id int DEFAULT NULL,
 users_id int DEFAULT NULL,
 PRIMARY KEY (id),
@@ -282,7 +282,7 @@ INSERT INTO review (content, rate_score, hotel_id, users_id) VALUES
 ( 'bad', 2, 2, 6 ),
 ( 'bad', 2, 3, 6 ),
 ( 'bad', 2, 4, 6 );
-SELECT * FROM review;
+SELECT * FROM review where users_id = 4;
 
 -- ------------------------------
 DROP TABLE IF EXISTS room_category;

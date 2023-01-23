@@ -6,7 +6,7 @@ public class ReviewHotelModel {
     private int id = 0;
     private String content = "";
     private int hotelID = 0;
-    private int userID = 0;
+    private int usersID = 0;
     private float rateScore = 0;
     private Date createdDate;
 
@@ -34,12 +34,12 @@ public class ReviewHotelModel {
         this.hotelID = hotelID;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getUsersID() {
+        return usersID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUsersID(int userID) {
+        this.usersID = userID;
     }
 
     public float getRateScore() {
