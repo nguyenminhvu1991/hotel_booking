@@ -37,9 +37,9 @@ public class HotelController {
     AttractionService attractionService;
     @Autowired
     ReviewHotelService reviewHotelService;
-    @Autowired
+//    @Autowired
     //@Qualifier("city")//Vũ comment từ Hưng
-    CityService cityService;
+//    CityService cityService;
 
 //    @Autowired
 //    ServiceHotelService serviceHotelService;
