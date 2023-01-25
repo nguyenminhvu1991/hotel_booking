@@ -1,47 +1,87 @@
 package com.cybersoft.hotel_booking.entity;
 
+import com.cybersoft.hotel_booking.DTO.HotelSearchDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "booking_room")
+@NamedNativeQuery(name = "BookingRoomEntity.findBookingRoomByHotelIdAndAndBookingId" ,
+        query= " SELECT "  +
+                " hotel.hotel_name,"  +
+                " room.id as room_id, room.max_occupy_adult, room.max_occupy_child, "  +
+                " :checkIn AS check_in,"  +
+                " :checkOut AS check_out,"  +
+                " room_category.room_category,  "  +
+                " bed_category.bed_category,"  +
+                " room.price * datediff(:checkOut,:checkIn) AS sub_total_price  "  +
+                " FROM hotel"  +
+                " INNER JOIN room"  +
+                " ON room.hotel_id = hotel.id"  +
+                " INNER JOIN room_dates"  +
+                " ON room.id = room_dates.room_id"  +
+                " INNER JOIN bed_category"  +
+                " ON bed_category.id = room.bed_category_id"  +
+                " INNER JOIN room_category"  +
+                " ON room_category.id = room.room_category_id"  +
+                " WHERE hotel_id = :hotelId "  +
+                " AND room.max_occupy_adult >= :maxOccupyAdult "  +
+                " AND room.max_occupy_child  >= :maxOccupyChild "  +
+                " AND room_dates.dt >= :checkIn "  +
+                " AND room_dates.dt < :checkOut "  +
+                " group by 1,2,3,4,5,6,7,8"  +
+                " HAVING  SUM(room_dates.room_status) = COUNT(room_dates.room_status)" ,
+        resultSetMapping = " 1" )
+@SqlResultSetMapping(name = " 1" ,
+        classes = @ConstructorResult(targetClass = HotelSearchDTO.class,
+                columns = {
+                        @ColumnResult(name = " hotel_name" ),
+                        @ColumnResult(name = " room_id" ,type = int.class),
+                        @ColumnResult(name = " max_occupy_adult" ,type = int.class),
+                        @ColumnResult(name = " max_occupy_child" ,type = int.class),
+                        @ColumnResult(name = " check_in" ),
+                        @ColumnResult(name = " check_out" ),
+                        @ColumnResult(name = " room_category" ),
+                        @ColumnResult(name = " bed_category" ),
+                        @ColumnResult(name = " sub_total_price" ,type = double.class)
+                }))
+@Entity(name = " booking_room" )
 public class BookingRoomEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @Column(name = "check_in")
+//    @Column(name = " check_in" )
 //    @Temporal(TemporalType.DATE)
 //    private Date checkIn;
-//    @Column(name = "check_out")
+//    @Column(name = " check_out" )
 //    @Temporal(TemporalType.DATE)
 //    private Date checkOut;
 //
-//    @Column(name = "room_name")
+//    @Column(name = " room_name" )
 //    private String roomName;
 //
-//    @Column(name = "price")
+//    @Column(name = " price" )
 //    private float price;
 //
-//    @Column(name = "offer_status")
+//    @Column(name = " offer_status" )
 //    private int offerStatus;
 
-//    @Column(name = "chosen_status")
+//    @Column(name = " chosen_status" )
 //    private int chosenStatus;
 
-//    @Column(name = "hotel_id")
+//    @Column(name = " hotel_id" )
 //    private int hotelId;
 
-//    @JsonIgnore
+//        @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "booking_id")
+    @JoinColumn(name = " booking_id" )
     private BookingEntity booking;
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = " room_id" )
     private RoomEntity room;
 
     public int getId() {

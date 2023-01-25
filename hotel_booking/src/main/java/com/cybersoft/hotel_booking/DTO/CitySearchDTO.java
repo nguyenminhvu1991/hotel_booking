@@ -1,6 +1,7 @@
 package com.cybersoft.hotel_booking.DTO;
 
 import com.cybersoft.hotel_booking.model.AttractionModel;
+import com.cybersoft.hotel_booking.model.AttractionModelByDai;
 import com.cybersoft.hotel_booking.model.CityProvinceModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,5 @@ public class CitySearchDTO extends CityProvinceModel {
     /**
      *  Attraction
      */
-    private List<AttractionModel> attractionModels;
+    private List<AttractionModelByDai> attractionModelByDais;
 }
