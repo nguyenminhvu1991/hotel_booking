@@ -450,8 +450,8 @@ voucher_id int DEFAULT NULL,
 -- issued_date date DEFAULT (CURRENT_DATE), -- VU cooment
 paid_date date DEFAULT (CURRENT_DATE),
 cancel_date date DEFAULT NULL, 
-booking_status varchar (100) DEFAULT NULL, -- open, complete, cancel
-total_price decimal (10,2) DEFAULT NULL,
+booking_status varchar (100) DEFAULT ('open'), -- open, complete, cancel
+total_price decimal (10,2) DEFAULT (0),
 payment_method varchar(100) DEFAULT NULL,
 -- payment_date date DEFAULT NULL,  --comment by Vu 15/01/23
 PRIMARY KEY (id),
