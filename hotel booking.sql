@@ -1,5 +1,4 @@
 DROP database hotel_booking;
-
 CREATE DATABASE hotel_booking;
 USE hotel_booking;
 -- -----------------------
@@ -476,13 +475,6 @@ room_id int DEFAULT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (booking_id) REFERENCES booking (id),-- ON DELETE CASCADE,
 FOREIGN KEY (room_id) REFERENCES room (id)-- ON DELETE CASCADE,
--- check_in date DEFAULT NULL, -- lấy từ Booking --comment by Vu 15/01/23
--- check_out date DEFAULT NULL, -- lấy từ Booking --comment by Vu 15/01/23
--- room_name varchar (100) DEFAULT NULL, -- lấy từ room --comment by Vu 15/01/23
--- price decimal (10,2) DEFAULT NULL, -- lấy từ room --comment by Vu 15/01/23
--- offer_status int DEFAULT 0, -- 1 (available) or 0 (unavailable) --comment by Vu 15/01/23
--- chosen_status int DEFAULT 0, -- 1 (KH chọn) or 0 (ko chọn) --comment by Vu
--- hotel_id int DEFAULT NULL, --comment by Vu 15/01/23
 );
 
 INSERT INTO booking_room (booking_id, room_id) VALUES
@@ -490,46 +482,6 @@ INSERT INTO booking_room (booking_id, room_id) VALUES
 
 select * from booking_room;
 
--- chủ yếu replicate dữ liệu từ bảng Booking và 1 số thông tin từ Input 
--- DROP TABLE IF EXISTS bill; --comment by Vu 15/01/23
--- CREATE TABLE bill (
--- id int NOT NULL AUTO_INCREMENT,
--- booking_id int DEFAULT NULL,
--- users_id int DEFAULT NULL,
--- full_name varchar (255) DEFAULT NULL,
--- payment_date date DEFAULT NULL,
--- payment_total decimal (10,2) DEFAULT NULL,
--- payment_method varchar(100) DEFAULT NULL,
--- PRIMARY KEY (id),
--- FOREIGN KEY (booking_id) REFERENCES booking (id),-- ON DELETE CASCADE,
--- FOREIGN KEY (users_id) REFERENCES users (id)-- ON DELETE CASCADE,
--- );
--- SELECT * FROM bill;
-
--- CẦN BỔ SUNG THÊM CÂU LỆNH INSERT 1 BOOKING ĐƯỢC THỰC HIỆN THANH TOÁN
-
--- DROP TABLE IF EXISTS booking_room_dates; --comment by Vu 15/01/23
--- CREATE TABLE booking_room_dates (
--- id int NOT NULL AUTO_INCREMENT,
--- room_dates_id int DEFAULT NULL, 
--- room_id int DEFAULT NULL,
--- dt date DEFAULT NULL,
--- room_status int DEFAULT NULL,
--- booking_id int DEFAULT NULL,
--- check_in date DEFAULT NULL,
--- check_out date DEFAULT NULL,
--- PRIMARY KEY (id),
--- FOREIGN KEY (booking_id) REFERENCES booking (id),-- ON DELETE CASCADE,
--- FOREIGN KEY (room_dates_id) REFERENCES room_dates (id)-- ON DELETE CASCADE,
--- );
--- -------------------------------
--- DROP TABLE IF EXISTS offer_status; --comment by Vu 15/01/23
--- CREATE TABLE offer_status ( -- dữ liệu được tạo từ query
--- id int NOT NULL AUTO_INCREMENT,
--- booking_id int  ,-- lấy từ booking_room_dates
--- room_id int DEFAULT NULL, -- lấy từ booking_room_dates
--- offer_status int DEFAULT NULL, -- tính toán từ booking_room_dates
--- PRIMARY KEY (id));
 
 -- ------------ DATABASE CREATION ENDS HERE -----------------
 -- ----------------------------------------------------------
@@ -661,14 +613,8 @@ AND room_dates.dt >= '2023-01-01' -- check_in input
 AND room_dates.dt < '2023-01-05' -- check_out input
 group by 1,2,3,4,5,6,7,8
 HAVING  SUM(room_dates.room_status) = COUNT(room_dates.room_status);
--- -------------------------------------------
-select b.*, r.room_name as room_name, 
-            h.hotel_name as hotel_name, h.address as hotel_address, 
-            h.email as hotel_email, h.phone as hotel_phone 
-            from room r , hotel h, booking b, booking_room br 
-            where b.id=br.booking_id and  r.hotel_id=h.id 
-            and br.room_id=r.id and b.users_id= 3 and h.id=1 ;           
--- ------------------------------------------------
+-- -------------------------------------------------------------------
+
 
 
 
