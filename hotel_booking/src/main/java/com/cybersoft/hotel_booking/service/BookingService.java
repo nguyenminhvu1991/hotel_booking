@@ -17,5 +17,6 @@ public interface BookingService {
 
     public BookingDTO findBookingDetailByIDAndUserId(int bookingId, int userId);
 
-
+    //add booking
+    String addBooking(int userId, int roomId, BookingEntity bookingEntity);
 }

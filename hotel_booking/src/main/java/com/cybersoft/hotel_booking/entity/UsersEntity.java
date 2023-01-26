@@ -37,7 +37,7 @@ public class UsersEntity {
     @Column(name = "gender")
     private String gender;
 
-    //    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "role_id")
     private RolesEntity roles;
