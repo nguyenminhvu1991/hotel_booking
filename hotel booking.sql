@@ -462,9 +462,12 @@ FOREIGN KEY (users_id) REFERENCES users (id)-- ON DELETE CASCADE,
 INSERT INTO booking (users_id, check_in,  check_out , adult_number, child_number , booking_status, total_price, payment_method) VALUES
 (3, '2023-01-01', '2023-01-05', 2 , 1,  'open', 10000, 'Paypal' ),
 (4, '2023-01-18', '2023-01-19', 1 , 0,  'complete', 12000, 'Visa Credit' );
+INSERT INTO booking (users_id, check_in,  check_out , adult_number, child_number , booking_status, total_price, payment_method) VALUES
+(3, '2023-01-18', '2023-01-19', 1 , 0,  'complete', 12000, 'Visa Credit' );
 
 SELECT * FROM booking;
--- -------------------------------
+-- -----------------------------------------------
+
 DROP TABLE IF EXISTS booking_room;
 CREATE TABLE booking_room (
 id int NOT NULL AUTO_INCREMENT,
@@ -481,6 +484,11 @@ FOREIGN KEY (room_id) REFERENCES room (id)-- ON DELETE CASCADE,
 -- chosen_status int DEFAULT 0, -- 1 (KH chọn) or 0 (ko chọn) --comment by Vu
 -- hotel_id int DEFAULT NULL, --comment by Vu 15/01/23
 );
+
+INSERT INTO booking_room (booking_id, room_id) VALUES
+(1,1);  
+
+select * from booking_room;
 
 -- chủ yếu replicate dữ liệu từ bảng Booking và 1 số thông tin từ Input 
 -- DROP TABLE IF EXISTS bill; --comment by Vu 15/01/23
@@ -652,7 +660,15 @@ AND room.max_occupy_child  >= 1 -- child_number input
 AND room_dates.dt >= '2023-01-01' -- check_in input
 AND room_dates.dt < '2023-01-05' -- check_out input
 group by 1,2,3,4,5,6,7,8
-HAVING  SUM(room_dates.room_status) = COUNT(room_dates.room_status)
+HAVING  SUM(room_dates.room_status) = COUNT(room_dates.room_status);
+-- -------------------------------------------
+select b.*, r.room_name as room_name, 
+            h.hotel_name as hotel_name, h.address as hotel_address, 
+            h.email as hotel_email, h.phone as hotel_phone 
+            from room r , hotel h, booking b, booking_room br 
+            where b.id=br.booking_id and  r.hotel_id=h.id 
+            and br.room_id=r.id and b.users_id= 3 and h.id=1 ;           
+-- ------------------------------------------------
 
 
 

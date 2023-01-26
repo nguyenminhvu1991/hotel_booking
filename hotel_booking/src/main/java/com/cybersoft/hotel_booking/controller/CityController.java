@@ -21,10 +21,7 @@ public class CityController {
     private ProvinceRepository provinceRepository;
     @Autowired
     private CityProvinceServiceImp cityProvinceServiceImp;
-    @PostMapping("/cancelbooking/{id}")
-    public ResponseEntity<?> cancel(@PathVariable("id") int id) {
-        return ResponseEntity.ok(cityProvinceServiceImp.cancel(id));
-    }
+
     @PostMapping("/search")
     public ResponseEntity<?> search(@PathVariable("typecity") String typeCity, @RequestBody SearchRequest searchRequest) throws ParseException {
         return ResponseEntity.ok(cityProvinceServiceImp.findAllByType(typeCity,searchRequest));

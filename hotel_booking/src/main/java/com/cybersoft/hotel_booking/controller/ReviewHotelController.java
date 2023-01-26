@@ -43,7 +43,7 @@ public class ReviewHotelController {
         }
     }
     @GetMapping("/find/userhotel/{userId}/{hotelId}")
-    public ResponseEntity<?> findReviewsByUserIdAndHotelId(@PathVariable("userId") int userId,@PathVariable("hotelId") int hotelId){
+    public ResponseEntity<?> findReviewsByUserIdAndHotelId(@PathVariable("userId") int userId, @PathVariable("hotelId") int hotelId){
         DataResponse dataResponse = new DataResponse();
         List<ReviewEntity> reviewEntityList = reviewHotelRepository.findReviewsByUserIdAndHotelId(userId, hotelId);
         if(reviewEntityList.isEmpty()){
