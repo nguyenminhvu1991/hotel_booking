@@ -15,7 +15,7 @@ public class ServiceEntity {
     @Column(name = "service")
     private String service;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "service")
     Set<HotelServiceEntity> hotelServiceEntitySet;
 

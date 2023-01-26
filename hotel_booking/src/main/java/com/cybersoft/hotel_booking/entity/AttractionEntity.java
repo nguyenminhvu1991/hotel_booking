@@ -21,7 +21,7 @@ public class AttractionEntity {
     private String image ;
 
 
-    @JsonIgnore //Dai uncommented
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;

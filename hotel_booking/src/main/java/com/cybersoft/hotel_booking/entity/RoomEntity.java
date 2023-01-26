@@ -24,7 +24,7 @@ public class RoomEntity {
     @Column(name = "price")
     private float price;
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;

@@ -37,7 +37,7 @@ public class UsersEntity {
     @Column(name = "gender")
     private String gender;
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "role_id")
     private RolesEntity roles;
@@ -142,11 +142,4 @@ public class UsersEntity {
         this.bookingEntitySet = bookingEntitySet;
     }
 
-//    public Set<BillEntity> getBillEntitySet() {
-//        return billEntitySet;
-//    }
-//
-//    public void setBillEntitySet(Set<BillEntity> billEntitySet) {
-//        this.billEntitySet = billEntitySet;
-//    }
 }

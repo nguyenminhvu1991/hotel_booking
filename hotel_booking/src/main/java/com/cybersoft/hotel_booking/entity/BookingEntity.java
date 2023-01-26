@@ -48,7 +48,7 @@ public class BookingEntity {
     @Temporal(TemporalType.DATE)
     private Date cancelDate;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "booking")
     Set<BookingRoomEntity> bookingRoomEntitySet;
 
