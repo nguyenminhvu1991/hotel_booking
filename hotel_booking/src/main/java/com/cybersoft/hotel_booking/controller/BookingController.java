@@ -125,4 +125,27 @@ public class BookingController {
     public ResponseEntity<?> cancel(@PathVariable("id") int id) {
         return ResponseEntity.ok(cityProvinceServiceImp.cancel(id));
     }
+
+    @PostMapping("/{userId}/{roomId}")
+    public ResponseEntity<?> addBooking(@PathVariable("userId") int userId, @PathVariable("roomId") int roomId, @RequestBody BookingEntity bookingEntity) {
+        DataResponse dataResponse = new DataResponse();
+
+        String message = bookingService.addBooking(userId, roomId, bookingEntity);
+
+        if (message != null) {//BAD REQUEST
+            dataResponse.setStatus(HttpStatus.BAD_REQUEST.value());//400
+            dataResponse.setDesc(HttpStatus.BAD_REQUEST.getReasonPhrase() + message);//BAD REQUEST
+            dataResponse.setSuccess(false);
+            dataResponse.setData("");
+
+            return ResponseEntity.ok(dataResponse);
+        }
+
+        dataResponse.setStatus(HttpStatus.OK.value());//200
+        dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
+        dataResponse.setSuccess(true);
+        dataResponse.setData(bookingEntity);
+
+        return ResponseEntity.ok(dataResponse);
+    }
 }
