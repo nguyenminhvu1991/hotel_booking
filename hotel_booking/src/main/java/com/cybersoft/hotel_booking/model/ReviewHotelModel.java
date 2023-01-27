@@ -3,12 +3,12 @@ package com.cybersoft.hotel_booking.model;
 import java.util.Date;
 
 public class ReviewHotelModel {
-    private int id = 0;
-    private String content = "";
-    private int hotelID = 0;
-    private int usersID = 0;
-    private float rateScore = 0;
+    private int id ;//= 0;
+    private String content ;//= "";
+    private float rateScore; //0
     private Date createdDate;
+    private int hotelID; //0
+    private int usersID; //0
 
     public int getId() {
         return id;
@@ -17,15 +17,12 @@ public class ReviewHotelModel {
     public void setId(int id) {
         this.id = id;
     }
-
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
-
     public int getHotelID() {
         return hotelID;
     }

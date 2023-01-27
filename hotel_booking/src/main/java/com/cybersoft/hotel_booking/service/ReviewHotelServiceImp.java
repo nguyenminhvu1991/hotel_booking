@@ -1,8 +1,12 @@
 package com.cybersoft.hotel_booking.service;
 
+import com.cybersoft.hotel_booking.entity.HotelEntity;
 import com.cybersoft.hotel_booking.entity.ReviewEntity;
+import com.cybersoft.hotel_booking.entity.UsersEntity;
 import com.cybersoft.hotel_booking.model.ReviewHotelModel;
+import com.cybersoft.hotel_booking.repository.HotelRepository;
 import com.cybersoft.hotel_booking.repository.ReviewHotelRepository;
+import com.cybersoft.hotel_booking.repository.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,12 @@ import java.util.Optional;
 public class ReviewHotelServiceImp implements ReviewHotelService {
     @Autowired
     ReviewHotelRepository reviewHotelRepository;
+
+    @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
+    HotelRepository hotelRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -90,8 +100,15 @@ public class ReviewHotelServiceImp implements ReviewHotelService {
     @Override
     public boolean addReview(ReviewHotelModel reviewHotelModel) {
         ReviewEntity reviewEntity = this.modelMapper.map(reviewHotelModel,ReviewEntity.class);
+        UsersEntity usersEntity = usersRepository.findById(reviewHotelModel.getUsersID()).get();//added by Vu
+        HotelEntity hotelEntity = hotelRepository.findById(reviewHotelModel.getHotelID()).get();//added by Vu
+
         try {
+            reviewEntity.setUsers(usersEntity);//added by Vu
+            reviewEntity.setHotel(hotelEntity);//added by Vu
+            //reviewEntity.setCreatedDate(reviewHotelModel.getCreatedDate());//added by Vu
             reviewHotelRepository.save(reviewEntity);
+
             return true;
         }catch (Exception e){
             System.out.println("Message : " + e);
@@ -103,8 +120,15 @@ public class ReviewHotelServiceImp implements ReviewHotelService {
     public boolean updateReview(int reviewId, ReviewHotelModel reviewHotelModel) {
         Optional<ReviewEntity> reviewEntity = reviewHotelRepository.findById(reviewId);
         ReviewEntity reviewEntity2 = this.modelMapper.map(reviewHotelModel,ReviewEntity.class);
+        UsersEntity usersEntity = reviewEntity.get().getUsers();//added by Vu
+        HotelEntity hotelEntity = reviewEntity.get().getHotel();//added by Vu
+
         if(reviewEntity.isPresent()){
             reviewEntity2.setId(reviewId);
+            reviewEntity2.setUsers(usersEntity);//added by Vu
+            reviewEntity2.setHotel(hotelEntity);//added by Vu
+            reviewEntity2.setCreatedDate(reviewEntity.get().getCreatedDate());//added by Vu
+
             reviewHotelRepository.save(reviewEntity2);
             return true;
         }

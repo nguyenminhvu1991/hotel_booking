@@ -11,4 +11,5 @@ public interface VoucherService {
     VoucherEntity findVoucherById(Integer id);
     VoucherEntity updateVoucher(Integer id, VoucherEntity voucherEntity);
     boolean deleteVoucherById(Integer id);
+
 }

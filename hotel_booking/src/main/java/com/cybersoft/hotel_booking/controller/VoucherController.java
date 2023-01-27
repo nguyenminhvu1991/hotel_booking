@@ -64,6 +64,28 @@ public class VoucherController {
         return ResponseEntity.ok(dataResponse);
     }
 
+    @GetMapping("/{voucherName}")
+    public ResponseEntity<?> findVoucher(@PathVariable("id") Integer id) {
+        DataResponse dataResponse = new DataResponse();
+
+        VoucherEntity voucherEntity = voucherService.findVoucherById(id);
+
+        if (voucherEntity == null) {//NOT FOUND
+            dataResponse.setStatus(HttpStatus.NOT_FOUND.value());//404
+            dataResponse.setDesc(HttpStatus.NOT_FOUND.getReasonPhrase());//NOT FOUND
+            dataResponse.setSuccess(false);
+            dataResponse.setData("");
+
+            return ResponseEntity.ok(dataResponse);
+        }
+
+        dataResponse.setStatus(HttpStatus.OK.value());//200
+        dataResponse.setDesc(HttpStatus.OK.getReasonPhrase());//OK
+        dataResponse.setSuccess(true);
+        dataResponse.setData(voucherEntity);
+
+        return ResponseEntity.ok(dataResponse);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> findVoucherById(@PathVariable("id") Integer id) {
         DataResponse dataResponse = new DataResponse();

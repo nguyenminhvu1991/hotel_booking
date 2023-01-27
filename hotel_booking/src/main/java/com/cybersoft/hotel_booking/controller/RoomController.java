@@ -1,7 +1,13 @@
 package com.cybersoft.hotel_booking.controller;
 
+import com.cybersoft.hotel_booking.entity.BedCategoryEntity;
 import com.cybersoft.hotel_booking.entity.RoomEntity;
+import com.cybersoft.hotel_booking.model.RoomModel;
 import com.cybersoft.hotel_booking.payload.response.DataResponse;
+import com.cybersoft.hotel_booking.repository.BedCategoryRepository;
+import com.cybersoft.hotel_booking.repository.HotelRepository;
+import com.cybersoft.hotel_booking.repository.RoomCategoryRepository;
+import com.cybersoft.hotel_booking.repository.RoomRepository;
 import com.cybersoft.hotel_booking.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +23,22 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    //CRUD
-    @PostMapping("")
-    public ResponseEntity<?> addRoom(@RequestBody RoomEntity roomEntity, BindingResult bindingResult) {
+    @Autowired
+    private HotelRepository hotelRepository;
+
+    @Autowired
+    private BedCategoryRepository bedCategoryRepository;
+
+    @Autowired
+    private RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @PostMapping("/{hotelId}/{bedCatId}/{roomCatId}")
+    public ResponseEntity<?> addRoom(@PathVariable("hotelId") int hotelId, @PathVariable("bedCatId") int bedCatId
+                                    , @PathVariable("roomCatId") int roomCatId
+            ,@RequestBody RoomEntity roomEntity, BindingResult bindingResult) {
         DataResponse dataResponse = new DataResponse();
 
         if (bindingResult.hasErrors()) {//BAD REQUEST
@@ -31,6 +50,9 @@ public class RoomController {
             return ResponseEntity.ok(dataResponse);
         }
 
+        roomEntity.setHotel(hotelRepository.findById(hotelId).get());
+        roomEntity.setBedCategoryEntity(bedCategoryRepository.findById(bedCatId).get());
+        roomEntity.setRoomCategoryEntity(roomCategoryRepository.findById(roomCatId).get());
         RoomEntity roomEntityAdded = roomService.addRoom(roomEntity);
 
         dataResponse.setStatus(HttpStatus.CREATED.value());//201
@@ -100,6 +122,9 @@ public class RoomController {
             return ResponseEntity.ok(dataResponse);
         }
 
+        roomEntity.setHotel(hotelRepository.findById(roomRepository.findById(id).get().getHotel().getId()).get());
+        roomEntity.setBedCategoryEntity(bedCategoryRepository.findById(roomRepository.findById(id).get().getBedCategoryEntity().getId()).get());
+        roomEntity.setRoomCategoryEntity(roomCategoryRepository.findById(roomRepository.findById(id).get().getRoomCategoryEntity().getId()).get());
         RoomEntity roomEntityUpdated = roomService.updateRoom(id, roomEntity);
 
         if (roomEntityUpdated == null) {//NOT FOUND

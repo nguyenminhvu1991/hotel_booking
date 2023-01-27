@@ -22,7 +22,6 @@ public class ReviewHotelController {
     @Autowired
     ReviewHotelRepository reviewHotelRepository;
 
-
     @GetMapping("/find/user/{userId}")
     public ResponseEntity<?> findReviewsByUserId(@PathVariable("userId") int id){
         DataResponse dataResponse = new DataResponse();
@@ -69,7 +68,7 @@ public class ReviewHotelController {
             dataResponse.setStatus(HttpStatus.NOT_FOUND.value());
             dataResponse.setSuccess(false);
             dataResponse.setDesc("Tìm reviews thất bại ");
-            dataResponse.setData(null);
+            dataResponse.setData("");
             return new ResponseEntity<>(dataResponse,HttpStatus.NOT_FOUND);
         }else{
             List<ReviewHotelModel> reviewHotelModelList = reviewHotelService.findReviewsByHotelId(id);
@@ -87,6 +86,7 @@ public class ReviewHotelController {
             dataResponse.setStatus(HttpStatus.OK.value());
             dataResponse.setSuccess(true);
             dataResponse.setDesc("Add review thành công ");
+            dataResponse.setData(reviewHotelModel);
             return new ResponseEntity<>(dataResponse, HttpStatus.OK);
         } else {
 
@@ -105,12 +105,14 @@ public class ReviewHotelController {
             dataResponse.setStatus(HttpStatus.OK.value());
             dataResponse.setSuccess(true);
             dataResponse.setDesc("Update review thành công ");
+            dataResponse.setData(reviewHotelRepository.findById(id));//added by Vu
             return new ResponseEntity<>(dataResponse, HttpStatus.OK);
         } else {
 
             dataResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             dataResponse.setSuccess(false);
             dataResponse.setDesc("Update review thất bại");
+            dataResponse.setData("");
             return new ResponseEntity<>(dataResponse, HttpStatus.BAD_REQUEST);
         }
 
@@ -122,12 +124,14 @@ public class ReviewHotelController {
             dataResponse.setStatus(HttpStatus.OK.value());
             dataResponse.setSuccess(true);
             dataResponse.setDesc("Delete review thành công ");
+            dataResponse.setData("");
             return new ResponseEntity<>(dataResponse, HttpStatus.OK);
         } else {
 
             dataResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             dataResponse.setSuccess(false);
             dataResponse.setDesc("Delete review thất bại");
+            dataResponse.setData("");
             return new ResponseEntity<>(dataResponse, HttpStatus.BAD_REQUEST);
         }
 

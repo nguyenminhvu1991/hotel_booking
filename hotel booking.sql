@@ -23,7 +23,6 @@ id int NOT NULL AUTO_INCREMENT,
 role_name varchar(100),
 PRIMARY KEY (id));
 
-/*Data for the table roles */
 INSERT INTO roles (role_name) VALUES 
 ('admin'),
 ('regular');
@@ -45,7 +44,6 @@ FOREIGN KEY (role_id) REFERENCES roles (id)-- ON DELETE CASCADE,
 );
 SELECT * FROM users;
 
-/*Data for the table users */
 INSERT INTO users (full_name, DOB, email, password, phone, gender, role_id) VALUES 
 ('Nguyen Van A' , '1990-12-12', 'nguyenvana@gmail.com'	,'$2a$12$Dhj428GYAkOLcrl6tdi6QOjTiSQ0X/7UJGF.tRZto0w0Bp57nM4VO', '090123456' ,'Male',	 	1),
 ('Nguyen Thi B' , '1995-12-03', 'nguyenthib95@gmail.com' ,'$2a$12$ULigTHQsN/wwpFAHxs9EwederX1.kZMX1CmLD0RjA9L0XwPO/HZrG', '090123444' ,'Female', 	1),
@@ -113,7 +111,6 @@ hotel_rank int DEFAULT NULL CHECK (hotel_rank >=1 OR hotel_rank <=5),
 description varchar(255) DEFAULT NULL,
 image text DEFAULT NULL,
 city_id int DEFAULT NULL,
--- serviceId int DEFAULT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (city_id) REFERENCES city (id)-- ON DELETE CASCADE,
 );

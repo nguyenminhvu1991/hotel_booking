@@ -37,17 +37,14 @@ public class HotelController {
     AttractionService attractionService;
     @Autowired
     ReviewHotelService reviewHotelService;
+
 //    @Autowired
     //@Qualifier("city")//Vũ comment từ Hưng
 //    CityService cityService;
 
-//    @Autowired
-//    ServiceHotelService serviceHotelService;
     @Autowired
     ServiceService serviceService;
 
-//    @Autowired
-//    ServiceOfHotelService serviceOfHotelService;
     @Autowired
     HotelServiceService hotelServiceService;
     @Autowired
@@ -112,31 +109,10 @@ public class HotelController {
         }
     }
 
-    //search all hotel by city id by Hưng => Trùng với Đại
-//    @GetMapping("/city")
-//    public ResponseEntity<?> getHotelInCity(@RequestParam("id") int id){
-//        DataResponse dataResponse = new DataResponse();
-//        Optional<CityEntity> cityEntity = cityRepository.findById(id);
-//        if(!cityEntity.isPresent()){
-//            dataResponse.setStatus(HttpStatus.NOT_FOUND.value());
-//            dataResponse.setSuccess(false);
-//            dataResponse.setDesc("Tìm City thất bại ");
-//            dataResponse.setData(null);
-//            return new ResponseEntity<>(dataResponse,HttpStatus.NOT_FOUND);
-//        }else{
-//            CityHotelDTO cityHotelDTO = cityService.findByIdCity(id);
-//            dataResponse.setStatus(HttpStatus.OK.value());
-//            dataResponse.setSuccess(true);
-//            dataResponse.setDesc("Tìm City thành công ");
-//            dataResponse.setData(cityHotelDTO);
-//            return new ResponseEntity<>(dataResponse,HttpStatus.OK);
-//        }
-//    }
-
 
     //CRUD
-    @PostMapping("")
-    public ResponseEntity<?> addHotel(@RequestBody HotelEntity hotelEntity, BindingResult bindingResult) {
+    @PostMapping("/{cityId}")
+    public ResponseEntity<?> addHotel(@PathVariable("cityId") int cityId, @RequestBody HotelEntity hotelEntity, BindingResult bindingResult) {
         DataResponse dataResponse = new DataResponse();
 
         if (bindingResult.hasErrors()) {//BAD REQUEST
@@ -147,9 +123,8 @@ public class HotelController {
 
             return ResponseEntity.ok(dataResponse);
         }
-
+        hotelEntity.setCity(cityRepository.findById(cityId).get());
         HotelEntity hotelEntityAdded = hotelService.addHotel(hotelEntity);
-
         dataResponse.setStatus(HttpStatus.CREATED.value());//201
         dataResponse.setDesc(HttpStatus.CREATED.getReasonPhrase());//CREATED
         dataResponse.setSuccess(true);
@@ -217,7 +192,9 @@ public class HotelController {
             return ResponseEntity.ok(dataResponse);
         }
 
+        hotelEntity.setCity(cityRepository.findById(hotelRepository.findById(id).get().getCity().getId()).get());//added by Vu to keep city id
         HotelEntity hotelEntityUpdated = hotelService.updateHotel(id, hotelEntity);
+
 
         if (hotelEntityUpdated == null) {//NOT FOUND
             dataResponse.setStatus(HttpStatus.NOT_FOUND.value());//404
