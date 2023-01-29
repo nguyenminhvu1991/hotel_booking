@@ -7,6 +7,7 @@ import com.cybersoft.hotel_booking.DTO.RoomDetailDTO;
 import com.cybersoft.hotel_booking.entity.CityEntity;
 import com.cybersoft.hotel_booking.entity.HotelEntity;
 import com.cybersoft.hotel_booking.model.AttractionModel;
+import com.cybersoft.hotel_booking.payload.request.SearchRequest;
 import com.cybersoft.hotel_booking.payload.response.DataResponse;
 import com.cybersoft.hotel_booking.repository.CityRepository;
 import com.cybersoft.hotel_booking.repository.ReviewHotelRepository;
@@ -107,6 +108,30 @@ public class HotelController {
             dataResponse.setData(hotelDetailDTO);
             return new ResponseEntity<>(dataResponse,HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/detail/search") //getDetailHotelByHotelIdAndSearchRequest api by Đại
+    public ResponseEntity<?> getDetailHotelByHotelIdAndSearchRequest(@RequestParam("id") int id,@RequestBody SearchRequest searchRequest){
+        Optional<HotelEntity> hotelEntity = hotelService.findById(id);
+            HotelDetailDTO hotelDetailDTO = new HotelDetailDTO();
+            hotelDetailDTO.setId(hotelEntity.get().getId());
+            hotelDetailDTO.setHotelName(hotelEntity.get().getHotelName());
+            hotelDetailDTO.setAddress(hotelEntity.get().getAddress());
+            hotelDetailDTO.setEmail(hotelEntity.get().getEmail());
+            hotelDetailDTO.setPhone(hotelEntity.get().getPhone());
+            hotelDetailDTO.setDescription(hotelEntity.get().getDescription());
+            hotelDetailDTO.setImage(hotelEntity.get().getImage());
+            hotelDetailDTO.setHotelRank(hotelEntity.get().getHotelRank());
+            hotelDetailDTO.setAvgRate(reviewHotelService.findAvgRateByHotelId(id));
+            hotelDetailDTO.setRateCount(reviewHotelService.findReviewsByHotelId(id).size());
+            hotelDetailDTO.setCity(hotelEntity.get().getCity().getCity());
+            hotelDetailDTO.setServiceModelList(hotelServiceService.findServiceByHotelId(id));
+            hotelDetailDTO.setAttractionModelList(attractionService.findAttractionsByHotelId(id));
+            hotelDetailDTO.setReviewHotelModelList(reviewHotelService.findReviewsByHotelId(id));
+
+            hotelDetailDTO.setRoomDetailDTOList(roomService.findRoomsByHotelIdAndSearchRequest(id,searchRequest));
+            hotelDetailDTO.setMinPriceRoomDetailDTO(roomService.findRoomsByHotelIdAndSearchRequest(id,searchRequest).stream().min(Comparator.comparingDouble(RoomDetailDTO::getPrice)).get());
+        return ResponseEntity.ok(hotelDetailDTO);
     }
 
 

@@ -1,6 +1,9 @@
 package com.cybersoft.hotel_booking.service;
 
+import com.cybersoft.hotel_booking.DTO.HotelSearchDTO;
 import com.cybersoft.hotel_booking.entity.RoomEntity;
+import com.cybersoft.hotel_booking.payload.request.SearchRequest;
+import com.cybersoft.hotel_booking.repository.BookingRoomRepository;
 import com.cybersoft.hotel_booking.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,7 @@ import com.cybersoft.hotel_booking.model.RoomCategoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomServiceImp implements RoomService {
@@ -22,6 +26,8 @@ public class RoomServiceImp implements RoomService {
     BedCategoryService bedCategoryService;
     @Autowired
     RoomCategoryService roomCategoryService;
+    @Autowired
+    BookingRoomRepository bookingRoomRepository;
     @Override
     public List<RoomDetailDTO> findRoomsByHotelId(int hotelId) { //Hưng
         List<RoomEntity> roomEntityList = roomRepository.findRoomEntitiesByHotelId(hotelId);//VŨ SỬA TỪ HƯNG: id => hotelId
@@ -39,6 +45,28 @@ public class RoomServiceImp implements RoomService {
             //roomDetailDTO.setBedCategoryModel(bedCategoryService.findBedModelById(roomEntity.getBedCategoryId()));//Vũ comment
             //roomDetailDTO.setRoomCategoryModel(roomCategoryService.findRoomModelById(roomEntity.getRoomCategoryId())); //Vũ comment
             roomDetailDTO.setRoomCategory(roomEntity.getRoomCategoryEntity().getRoomCategory());
+            roomDetailDTOList.add(roomDetailDTO);
+        }
+        return roomDetailDTOList;
+    }
+    @Override
+    public List<RoomDetailDTO> findRoomsByHotelIdAndSearchRequest(int hotelId, SearchRequest searchRequest) { //Hưng
+
+        List<HotelSearchDTO> hotelSearchDTOList = bookingRoomRepository.findBookingRoomByHotelIdAndAndBookingId(
+                searchRequest.getCheckIn(),searchRequest.getCheckOut()
+                ,hotelId,searchRequest.getMaxOccupyAdult()
+                ,searchRequest.getMaxOccupyChild());
+        List<RoomDetailDTO> roomDetailDTOList = new ArrayList<>();
+        for(HotelSearchDTO hotelSearchDTO : hotelSearchDTOList){
+            RoomDetailDTO roomDetailDTO = new RoomDetailDTO();
+            roomDetailDTO.setId(0);
+            roomDetailDTO.setRoomName("roomName");
+            roomDetailDTO.setPrice((float) hotelSearchDTO.getSub_total_price());
+            roomDetailDTO.setHotelId(hotelId);
+            roomDetailDTO.setMaxOccupyAdult(hotelSearchDTO.getMax_occupy_adult());
+            roomDetailDTO.setMaxOccupyChild(hotelSearchDTO.getMax_occupy_adult());
+            roomDetailDTO.setBedCategory(hotelSearchDTO.getBed_category());
+            roomDetailDTO.setRoomCategory(hotelSearchDTO.getRoom_category());
             roomDetailDTOList.add(roomDetailDTO);
         }
         return roomDetailDTOList;
