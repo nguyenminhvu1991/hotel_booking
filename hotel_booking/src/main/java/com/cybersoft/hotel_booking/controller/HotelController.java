@@ -89,12 +89,7 @@ public class HotelController {
             hotelDetailDTO.setHotelRank(hotelEntity.get().getHotelRank());
             hotelDetailDTO.setAvgRate(reviewHotelService.findAvgRateByHotelId(id));
             hotelDetailDTO.setRateCount(reviewHotelService.findReviewsByHotelId(id).size());
-            //hotelDetailDTO.setCityId(hotelEntity.get().getCityId());
-            //hotelDetailDTO.setCityId(hotelEntity.get().getCity().getId());
             hotelDetailDTO.setCity(hotelEntity.get().getCity().getCity());
-            //hotelDetailDTO.setCityDetailDTO(cityService.findByCityId(hotelEntity.get().getCityId())); //Vũ comment từ Hưng
-            //hotelDetailDTO.setCityDetailDTO(cityService.findByCityId(hotelEntity.get().getCity().getId())); //Vũ comment từ Hưng
-            //hotelDetailDTO.setServiceModelList(serviceOfHotelService.findServiceByHotelId(id));
             hotelDetailDTO.setServiceModelList(hotelServiceService.findServiceByHotelId(id));
             hotelDetailDTO.setAttractionModelList(attractionService.findAttractionsByHotelId(id));
             hotelDetailDTO.setReviewHotelModelList(reviewHotelService.findReviewsByHotelId(id));

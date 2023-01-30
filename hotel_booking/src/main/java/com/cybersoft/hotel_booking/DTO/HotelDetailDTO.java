@@ -132,13 +132,6 @@ public class HotelDetailDTO {
         this.reviewHotelModelList = reviewHotelModelList;
     }
 
-//    public ServiceModel getServiceModel() {
-//        return serviceModel;
-//    }
-//
-//    public void setServiceModel(ServiceModel serviceModel) {
-//        this.serviceModel = serviceModel;
-//    }
 
     public List<ServiceModel> getServiceModelList() {
         return serviceModelList;
